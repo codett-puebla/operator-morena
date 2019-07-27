@@ -1,0 +1,13 @@
+F:\Repos\operator-morena\operator-morena\operator-morena\bin\Debug\operator-morena.exe.config
+F:\Repos\operator-morena\operator-morena\operator-morena\bin\Debug\operator-morena.exe
+F:\Repos\operator-morena\operator-morena\operator-morena\bin\Debug\operator-morena.pdb
+F:\Repos\operator-morena\operator-morena\operator-morena\bin\Debug\MaterialSkin.dll
+F:\Repos\operator-morena\operator-morena\operator-morena\obj\Debug\operator-morena.csprojAssemblyReference.cache
+F:\Repos\operator-morena\operator-morena\operator-morena\obj\Debug\operator_morena.scrLogin.resources
+F:\Repos\operator-morena\operator-morena\operator-morena\obj\Debug\operator_morena.Properties.Resources.resources
+F:\Repos\operator-morena\operator-morena\operator-morena\obj\Debug\operator-morena.csproj.GenerateResource.cache
+F:\Repos\operator-morena\operator-morena\operator-morena\obj\Debug\operator-morena.csproj.CoreCompileInputs.cache
+F:\Repos\operator-morena\operator-morena\operator-morena\obj\Debug\operator-morena.csproj.CopyComplete
+F:\Repos\operator-morena\operator-morena\operator-morena\obj\Debug\operator-morena.exe
+F:\Repos\operator-morena\operator-morena\operator-morena\obj\Debug\operator-morena.pdb
+F:\Repos\operator-morena\operator-morena\operator-morena\obj\Debug\operator_morena.wfDashBoard.resources

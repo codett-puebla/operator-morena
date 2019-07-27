@@ -12,12 +12,12 @@ using MaterialSkin.Controls;
 
 namespace operator_morena
 {
-    public partial class scrLogin : MaterialForm
+    public partial class wfDashBoard : MaterialForm
     {
-        private wfDashBoard nextWidnows;
-        public scrLogin()
+        public wfDashBoard()
         {
             InitializeComponent();
+
             MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
@@ -28,23 +28,14 @@ namespace operator_morena
                 Primary.Blue400,
                 Accent.LightBlue200,
                 TextShade.WHITE
-            
+
             );
-
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.nextWidnows = new wfDashBoard();
-
         }
 
-        private void BtLogin_Click(object sender, EventArgs e)
+        private void WfDashBoard_FormClosing(object sender, FormClosingEventArgs e)
         {
-            
-            Console.WriteLine("Entrando al sistema --> [" + tbPassword.Text + "]");
-            this.nextWidnows.Show();
-            this.nextWidnows.BringToFront();
-            this.Hide();
+            Application.ExitThread();
+            Application.Exit();
         }
     }
 }
