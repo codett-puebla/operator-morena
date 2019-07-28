@@ -456,7 +456,6 @@
             // 
             // cbSection
             // 
-            this.cbSection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSection.Enabled = false;
             this.cbSection.FormattingEnabled = true;
             this.cbSection.Location = new System.Drawing.Point(622, 428);
@@ -467,7 +466,6 @@
             // 
             // cbMunicipality
             // 
-            this.cbMunicipality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbMunicipality.Enabled = false;
             this.cbMunicipality.FormattingEnabled = true;
             this.cbMunicipality.Location = new System.Drawing.Point(622, 475);
@@ -475,10 +473,10 @@
             this.cbMunicipality.Size = new System.Drawing.Size(160, 21);
             this.cbMunicipality.TabIndex = 30;
             this.cbMunicipality.SelectedIndexChanged += new System.EventHandler(this.cbMunicipality_SelectedIndexChanged);
+            this.cbMunicipality.Click += new System.EventHandler(this.cbMunicipality_Click);
             // 
             // cbPopulation
             // 
-            this.cbPopulation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPopulation.Enabled = false;
             this.cbPopulation.FormattingEnabled = true;
             this.cbPopulation.Location = new System.Drawing.Point(879, 472);

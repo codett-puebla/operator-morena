@@ -81,10 +81,9 @@ namespace operator_morena
 
             rtbComents.Text = string.Empty;
 
-            cbPopulation.Items.Clear();
-            cbMunicipality.Items.Clear();
+            cbPopulation.Text = string.Empty;
+            cbMunicipality.Text = string.Empty;
 
-            dgvOperator.Rows.Clear();
             chb1.Checked = false;
             chb2.Checked = false;
             chb3.Checked = false;
@@ -96,6 +95,7 @@ namespace operator_morena
 
         private void fill_dgv()
         {
+            dgvOperator.Rows.Clear();
             ConnectionDB db = new ConnectionDB();
             var datos = db.Operators.Join(db.Sections, x => x.id_sections, y => y.id,
                 (x, y) => new
@@ -114,6 +114,32 @@ namespace operator_morena
             {
                 dgvOperator.Rows.Add(item.id, item.name, item.alias, item.email, item.phone,item.section);
             }
+        }
+
+        private void cancel_fields()
+        {
+            tsbtnGuarda.Visible = false;
+            tsbtnCancela.Visible = false;
+            tsbtnNuevo.Visible = true;
+
+            tbName.Enabled = false;
+            tbAlias.Enabled = false;
+            tbEmail.Enabled = false;
+            tbPhone.Enabled = false;
+
+            rtbComents.Enabled = false;
+
+            chb1.Enabled = false;
+            chb2.Enabled = false;
+            chb3.Enabled = false;
+            chb4.Enabled = false;
+            chb5.Enabled = false;
+
+
+            cbSection.Enabled = false;
+            cbPopulation.Enabled = false;
+            cbMunicipality.Enabled = false;
+            clean_fields();
         }
         #endregion
 
@@ -180,6 +206,7 @@ namespace operator_morena
 
             cbSection.Items.Clear();
             cbSection.DataSource = sections;
+            fill_dgv();
         }
 
         #region BOTONES
@@ -205,31 +232,13 @@ namespace operator_morena
             cbSection.Enabled = true;
             cbPopulation.Enabled = true;
             cbMunicipality.Enabled = true;
+
+            clean_fields();
         }
 
         private void tsbtnCancela_Click(object sender, EventArgs e)
         {
-            tsbtnGuarda.Visible = false;
-            tsbtnCancela.Visible = false;
-            tsbtnNuevo.Visible = true;
-
-            tbName.Enabled = false;
-            tbAlias.Enabled = false;
-            tbEmail.Enabled = false;
-            tbPhone.Enabled = false;
-
-            rtbComents.Enabled = false;
-
-            chb1.Enabled = false;
-            chb2.Enabled = false;
-            chb3.Enabled = false;
-            chb4.Enabled = false;
-            chb5.Enabled = false;
-
-
-            cbSection.Enabled = false;
-            cbPopulation.Enabled = false;
-            cbMunicipality.Enabled = false;
+            cancel_fields();
         }
 
         private void tsbtnGuarda_Click(object sender, EventArgs e)
@@ -303,6 +312,7 @@ namespace operator_morena
 
             MessageBox.Show("Registro realizado con éxito", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Information);
             clean_fields();
+            cancel_fields();
             fill_dgv();            
         }
         #endregion
@@ -392,6 +402,35 @@ namespace operator_morena
             Operator @operator = db.Operators.Where(x => x.id == id).FirstOrDefault();
 
             pbImagen.Image = ConvertBinaryToImage(@operator.image);
+            tbName.Text = @operator.name;
+            tbAlias.Text = @operator.alias;
+            tbEmail.Text = @operator.email;
+            tbPhone.Text = @operator.phone;
+            rtbComents.Text = @operator.observation;
+
+            switch (@operator.score)
+            {
+                case 1:
+                    chb1.Checked = true;
+                    break;
+                case 2:
+                    chb2.Checked = true;
+                    break;
+                case 3:
+                    chb3.Checked = true;
+                    break;
+                case 4:
+                    chb4.Checked = true;
+                    break;
+                case 5:
+                    chb5.Checked = true;
+                    break;
+            }
+        }
+
+        private void cbMunicipality_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
