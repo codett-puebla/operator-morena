@@ -33,11 +33,11 @@
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.stbtSearch = new System.Windows.Forms.ToolStripButton();
             this.tsbtDelete = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnCancela = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnGuarda = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.tsbtnNuevo = new System.Windows.Forms.ToolStripButton();
+            this.dgvOperator = new System.Windows.Forms.DataGridView();
             this.pbImagen = new System.Windows.Forms.PictureBox();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
@@ -46,9 +46,6 @@
             this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
             this.tbName = new System.Windows.Forms.TextBox();
             this.tbAlias = new System.Windows.Forms.TextBox();
-            this.tbPopulation = new System.Windows.Forms.TextBox();
-            this.tbSection = new System.Windows.Forms.TextBox();
-            this.tbMunicipality = new System.Windows.Forms.TextBox();
             this.materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel8 = new MaterialSkin.Controls.MaterialLabel();
@@ -57,8 +54,16 @@
             this.tbPhone = new System.Windows.Forms.TextBox();
             this.rtbComents = new System.Windows.Forms.RichTextBox();
             this.gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
+            this.chb1 = new System.Windows.Forms.CheckBox();
+            this.chb2 = new System.Windows.Forms.CheckBox();
+            this.chb3 = new System.Windows.Forms.CheckBox();
+            this.chb4 = new System.Windows.Forms.CheckBox();
+            this.chb5 = new System.Windows.Forms.CheckBox();
+            this.cbSection = new System.Windows.Forms.ComboBox();
+            this.cbMunicipality = new System.Windows.Forms.ComboBox();
+            this.cbPopulation = new System.Windows.Forms.ComboBox();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOperator)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbImagen)).BeginInit();
             this.SuspendLayout();
             // 
@@ -72,10 +77,10 @@
             this.toolStripTextBox1,
             this.stbtSearch,
             this.tsbtDelete,
-            this.toolStripButton3,
-            this.toolStripButton4,
+            this.tsbtnCancela,
+            this.tsbtnGuarda,
             this.toolStripButton2,
-            this.toolStripButton1});
+            this.tsbtnNuevo});
             this.toolStrip1.Location = new System.Drawing.Point(9, 65);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1019, 34);
@@ -89,7 +94,7 @@
             // 
             // stbtSearch
             // 
-            this.stbtSearch.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.stbtSearch.BackColor = System.Drawing.Color.Transparent;
             this.stbtSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.stbtSearch.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.stbtSearch.Image = ((System.Drawing.Image)(resources.GetObject("stbtSearch.Image")));
@@ -107,26 +112,31 @@
             this.tsbtDelete.Name = "tsbtDelete";
             this.tsbtDelete.Size = new System.Drawing.Size(23, 31);
             this.tsbtDelete.Text = "toolStripButton1";
+            this.tsbtDelete.Visible = false;
             // 
-            // toolStripButton3
+            // tsbtnCancela
             // 
-            this.toolStripButton3.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(23, 31);
-            this.toolStripButton3.Text = "toolStripButton3";
+            this.tsbtnCancela.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsbtnCancela.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbtnCancela.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnCancela.Image")));
+            this.tsbtnCancela.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnCancela.Name = "tsbtnCancela";
+            this.tsbtnCancela.Size = new System.Drawing.Size(23, 31);
+            this.tsbtnCancela.Text = "toolStripButton3";
+            this.tsbtnCancela.Visible = false;
+            this.tsbtnCancela.Click += new System.EventHandler(this.tsbtnCancela_Click);
             // 
-            // toolStripButton4
+            // tsbtnGuarda
             // 
-            this.toolStripButton4.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(23, 31);
-            this.toolStripButton4.Text = "toolStripButton4";
+            this.tsbtnGuarda.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsbtnGuarda.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbtnGuarda.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnGuarda.Image")));
+            this.tsbtnGuarda.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnGuarda.Name = "tsbtnGuarda";
+            this.tsbtnGuarda.Size = new System.Drawing.Size(23, 31);
+            this.tsbtnGuarda.Text = "toolStripButton4";
+            this.tsbtnGuarda.Visible = false;
+            this.tsbtnGuarda.Click += new System.EventHandler(this.tsbtnGuarda_Click);
             // 
             // toolStripButton2
             // 
@@ -137,25 +147,27 @@
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(23, 31);
             this.toolStripButton2.Text = "toolStripButton2";
+            this.toolStripButton2.Visible = false;
             // 
-            // toolStripButton1
+            // tsbtnNuevo
             // 
-            this.toolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 31);
-            this.toolStripButton1.Text = "toolStripButton1";
+            this.tsbtnNuevo.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsbtnNuevo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbtnNuevo.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnNuevo.Image")));
+            this.tsbtnNuevo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnNuevo.Name = "tsbtnNuevo";
+            this.tsbtnNuevo.Size = new System.Drawing.Size(23, 31);
+            this.tsbtnNuevo.Text = "toolStripButton1";
+            this.tsbtnNuevo.Click += new System.EventHandler(this.tsbtnNuevo_Click);
             // 
-            // dataGridView1
+            // dgvOperator
             // 
-            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(9, 113);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(480, 613);
-            this.dataGridView1.TabIndex = 1;
+            this.dgvOperator.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvOperator.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOperator.Location = new System.Drawing.Point(9, 113);
+            this.dgvOperator.Name = "dgvOperator";
+            this.dgvOperator.Size = new System.Drawing.Size(480, 613);
+            this.dgvOperator.TabIndex = 1;
             // 
             // pbImagen
             // 
@@ -239,6 +251,7 @@
             // 
             // tbName
             // 
+            this.tbName.Enabled = false;
             this.tbName.Location = new System.Drawing.Point(763, 112);
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(252, 20);
@@ -246,31 +259,11 @@
             // 
             // tbAlias
             // 
+            this.tbAlias.Enabled = false;
             this.tbAlias.Location = new System.Drawing.Point(763, 145);
             this.tbAlias.Name = "tbAlias";
             this.tbAlias.Size = new System.Drawing.Size(252, 20);
             this.tbAlias.TabIndex = 12;
-            // 
-            // tbPopulation
-            // 
-            this.tbPopulation.Location = new System.Drawing.Point(879, 473);
-            this.tbPopulation.Name = "tbPopulation";
-            this.tbPopulation.Size = new System.Drawing.Size(100, 20);
-            this.tbPopulation.TabIndex = 13;
-            // 
-            // tbSection
-            // 
-            this.tbSection.Location = new System.Drawing.Point(622, 429);
-            this.tbSection.Name = "tbSection";
-            this.tbSection.Size = new System.Drawing.Size(95, 20);
-            this.tbSection.TabIndex = 14;
-            // 
-            // tbMunicipality
-            // 
-            this.tbMunicipality.Location = new System.Drawing.Point(622, 473);
-            this.tbMunicipality.Name = "tbMunicipality";
-            this.tbMunicipality.Size = new System.Drawing.Size(160, 20);
-            this.tbMunicipality.TabIndex = 15;
             // 
             // materialLabel6
             // 
@@ -330,6 +323,7 @@
             // 
             // tbEmail
             // 
+            this.tbEmail.Enabled = false;
             this.tbEmail.Location = new System.Drawing.Point(763, 177);
             this.tbEmail.Name = "tbEmail";
             this.tbEmail.Size = new System.Drawing.Size(252, 20);
@@ -337,6 +331,7 @@
             // 
             // tbPhone
             // 
+            this.tbPhone.Enabled = false;
             this.tbPhone.Location = new System.Drawing.Point(763, 211);
             this.tbPhone.Name = "tbPhone";
             this.tbPhone.Size = new System.Drawing.Size(252, 20);
@@ -344,6 +339,7 @@
             // 
             // rtbComents
             // 
+            this.rtbComents.Enabled = false;
             this.rtbComents.Location = new System.Drawing.Point(522, 317);
             this.rtbComents.Name = "rtbComents";
             this.rtbComents.Size = new System.Drawing.Size(493, 72);
@@ -376,11 +372,116 @@
             this.gMapControl1.TabIndex = 23;
             this.gMapControl1.Zoom = 0D;
             // 
+            // chb1
+            // 
+            this.chb1.AutoSize = true;
+            this.chb1.BackColor = System.Drawing.Color.Transparent;
+            this.chb1.Enabled = false;
+            this.chb1.Location = new System.Drawing.Point(617, 253);
+            this.chb1.Name = "chb1";
+            this.chb1.Size = new System.Drawing.Size(69, 17);
+            this.chb1.TabIndex = 24;
+            this.chb1.Text = "1 Estrella";
+            this.chb1.UseVisualStyleBackColor = false;
+            this.chb1.CheckedChanged += new System.EventHandler(this.chb1_CheckedChanged);
+            // 
+            // chb2
+            // 
+            this.chb2.AutoSize = true;
+            this.chb2.BackColor = System.Drawing.Color.Transparent;
+            this.chb2.Enabled = false;
+            this.chb2.Location = new System.Drawing.Point(692, 254);
+            this.chb2.Name = "chb2";
+            this.chb2.Size = new System.Drawing.Size(69, 17);
+            this.chb2.TabIndex = 25;
+            this.chb2.Text = "2 Estrella";
+            this.chb2.UseVisualStyleBackColor = false;
+            this.chb2.CheckedChanged += new System.EventHandler(this.chb2_CheckedChanged);
+            // 
+            // chb3
+            // 
+            this.chb3.AutoSize = true;
+            this.chb3.BackColor = System.Drawing.Color.Transparent;
+            this.chb3.Enabled = false;
+            this.chb3.Location = new System.Drawing.Point(763, 254);
+            this.chb3.Name = "chb3";
+            this.chb3.Size = new System.Drawing.Size(69, 17);
+            this.chb3.TabIndex = 26;
+            this.chb3.Text = "3 Estrella";
+            this.chb3.UseVisualStyleBackColor = false;
+            this.chb3.CheckedChanged += new System.EventHandler(this.chb3_CheckedChanged);
+            // 
+            // chb4
+            // 
+            this.chb4.AutoSize = true;
+            this.chb4.BackColor = System.Drawing.Color.Transparent;
+            this.chb4.Enabled = false;
+            this.chb4.Location = new System.Drawing.Point(838, 254);
+            this.chb4.Name = "chb4";
+            this.chb4.Size = new System.Drawing.Size(69, 17);
+            this.chb4.TabIndex = 27;
+            this.chb4.Text = "4 Estrella";
+            this.chb4.UseVisualStyleBackColor = false;
+            this.chb4.CheckedChanged += new System.EventHandler(this.chb4_CheckedChanged);
+            // 
+            // chb5
+            // 
+            this.chb5.AutoSize = true;
+            this.chb5.BackColor = System.Drawing.Color.Transparent;
+            this.chb5.Enabled = false;
+            this.chb5.Location = new System.Drawing.Point(910, 253);
+            this.chb5.Name = "chb5";
+            this.chb5.Size = new System.Drawing.Size(69, 17);
+            this.chb5.TabIndex = 28;
+            this.chb5.Text = "5 Estrella";
+            this.chb5.UseVisualStyleBackColor = false;
+            this.chb5.CheckedChanged += new System.EventHandler(this.chb5_CheckedChanged);
+            // 
+            // cbSection
+            // 
+            this.cbSection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSection.Enabled = false;
+            this.cbSection.FormattingEnabled = true;
+            this.cbSection.Location = new System.Drawing.Point(622, 428);
+            this.cbSection.Name = "cbSection";
+            this.cbSection.Size = new System.Drawing.Size(160, 21);
+            this.cbSection.TabIndex = 29;
+            this.cbSection.SelectedIndexChanged += new System.EventHandler(this.cbSection_SelectedIndexChanged);
+            // 
+            // cbMunicipality
+            // 
+            this.cbMunicipality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbMunicipality.Enabled = false;
+            this.cbMunicipality.FormattingEnabled = true;
+            this.cbMunicipality.Location = new System.Drawing.Point(622, 475);
+            this.cbMunicipality.Name = "cbMunicipality";
+            this.cbMunicipality.Size = new System.Drawing.Size(160, 21);
+            this.cbMunicipality.TabIndex = 30;
+            this.cbMunicipality.SelectedIndexChanged += new System.EventHandler(this.cbMunicipality_SelectedIndexChanged);
+            // 
+            // cbPopulation
+            // 
+            this.cbPopulation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPopulation.Enabled = false;
+            this.cbPopulation.FormattingEnabled = true;
+            this.cbPopulation.Location = new System.Drawing.Point(879, 472);
+            this.cbPopulation.Name = "cbPopulation";
+            this.cbPopulation.Size = new System.Drawing.Size(136, 21);
+            this.cbPopulation.TabIndex = 31;
+            // 
             // wfDashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1037, 738);
+            this.Controls.Add(this.cbPopulation);
+            this.Controls.Add(this.cbMunicipality);
+            this.Controls.Add(this.cbSection);
+            this.Controls.Add(this.chb5);
+            this.Controls.Add(this.chb4);
+            this.Controls.Add(this.chb3);
+            this.Controls.Add(this.chb2);
+            this.Controls.Add(this.chb1);
             this.Controls.Add(this.gMapControl1);
             this.Controls.Add(this.rtbComents);
             this.Controls.Add(this.tbPhone);
@@ -389,9 +490,6 @@
             this.Controls.Add(this.materialLabel8);
             this.Controls.Add(this.materialLabel7);
             this.Controls.Add(this.materialLabel6);
-            this.Controls.Add(this.tbMunicipality);
-            this.Controls.Add(this.tbSection);
-            this.Controls.Add(this.tbPopulation);
             this.Controls.Add(this.tbAlias);
             this.Controls.Add(this.tbName);
             this.Controls.Add(this.materialLabel5);
@@ -400,7 +498,7 @@
             this.Controls.Add(this.materialLabel2);
             this.Controls.Add(this.materialLabel1);
             this.Controls.Add(this.pbImagen);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgvOperator);
             this.Controls.Add(this.toolStrip1);
             this.Name = "wfDashBoard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -409,7 +507,7 @@
             this.Load += new System.EventHandler(this.wfDashBoard_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOperator)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbImagen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -419,7 +517,7 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvOperator;
         private System.Windows.Forms.PictureBox pbImagen;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;
         private MaterialSkin.Controls.MaterialLabel materialLabel2;
@@ -429,15 +527,12 @@
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
         private System.Windows.Forms.ToolStripButton stbtSearch;
         private System.Windows.Forms.ToolStripButton tsbtDelete;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
+        private System.Windows.Forms.ToolStripButton tsbtnCancela;
+        private System.Windows.Forms.ToolStripButton tsbtnGuarda;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton tsbtnNuevo;
         private System.Windows.Forms.TextBox tbName;
         private System.Windows.Forms.TextBox tbAlias;
-        private System.Windows.Forms.TextBox tbPopulation;
-        private System.Windows.Forms.TextBox tbSection;
-        private System.Windows.Forms.TextBox tbMunicipality;
         private MaterialSkin.Controls.MaterialLabel materialLabel6;
         private MaterialSkin.Controls.MaterialLabel materialLabel7;
         private MaterialSkin.Controls.MaterialLabel materialLabel8;
@@ -446,5 +541,13 @@
         private System.Windows.Forms.TextBox tbPhone;
         private System.Windows.Forms.RichTextBox rtbComents;
         private GMap.NET.WindowsForms.GMapControl gMapControl1;
+        private System.Windows.Forms.CheckBox chb1;
+        private System.Windows.Forms.CheckBox chb2;
+        private System.Windows.Forms.CheckBox chb3;
+        private System.Windows.Forms.CheckBox chb4;
+        private System.Windows.Forms.CheckBox chb5;
+        private System.Windows.Forms.ComboBox cbSection;
+        private System.Windows.Forms.ComboBox cbMunicipality;
+        private System.Windows.Forms.ComboBox cbPopulation;
     }
 }

@@ -42,9 +42,25 @@ namespace operator_morena
 
         private void BtLogin_Click(object sender, EventArgs e)
         {
-            ConnectionDB db = new ConnectionDB();
-            var datos = db.Users.ToList();
+            //VALIDAMOS QUE EL CAMPO tbPassword NO ESTE VACÍO
+            if (String.IsNullOrEmpty(tbPassword.Text))
+            {
+                MessageBox.Show("Campo obligatorio","Operador",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                tbPassword.Focus();
+                return;
+            }
 
+            ConnectionDB db = new ConnectionDB();
+
+            //COMPROBAMOS QUE EL USUARIO EXISTA EN BASE DE DATOS
+            Users users = db.Users.Where(x=> x.password == tbPassword.Text).FirstOrDefault();
+            if(users == null)
+            {
+                MessageBox.Show("El usuario no existe", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbPassword.Focus();
+                return;
+            }
+            
             Console.WriteLine("Entrando al sistema --> [" + tbPassword.Text + "]");
             this.nextWidnows.Show();
             this.nextWidnows.BringToFront();

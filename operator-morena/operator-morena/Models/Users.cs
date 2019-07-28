@@ -11,6 +11,6 @@ namespace operator_morena.Models
         public int id { get; set; }
         public string user { get; set; }
         public string password { get; set; }
-        public string user_kind { get; set; }
+        public int user_kind { get; set; }
     }
 }
