@@ -44,8 +44,75 @@ namespace operator_morena
         {
             using (MemoryStream ms = new MemoryStream())
             {
-                img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                return ms.ToArray();
+                if(img != null)
+                {
+                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    return ms.ToArray();
+                }
+                else
+                {
+                    return ms.ToArray();
+                }                
+            }
+        }
+
+        private Image ConvertBinaryToImage(byte[] data)
+        {
+            using (MemoryStream ms = new MemoryStream(data))
+            {
+                try
+                {
+                    return Image.FromStream(ms);
+                }
+                catch(Exception e)
+                {
+                    return null;
+                }
+                
+            }
+        }
+
+        private void clean_fields()
+        {
+            tbName.Text = string.Empty;
+            tbAlias.Text = string.Empty;
+            tbEmail.Text = string.Empty;
+            tbPhone.Text = string.Empty;
+
+            rtbComents.Text = string.Empty;
+
+            cbPopulation.Items.Clear();
+            cbMunicipality.Items.Clear();
+
+            dgvOperator.Rows.Clear();
+            chb1.Checked = false;
+            chb2.Checked = false;
+            chb3.Checked = false;
+            chb4.Checked = false;
+            chb5.Checked = false;
+
+            pbImagen.Image = null;
+        }
+
+        private void fill_dgv()
+        {
+            ConnectionDB db = new ConnectionDB();
+            var datos = db.Operators.Join(db.Sections, x => x.id_sections, y => y.id,
+                (x, y) => new
+                {
+                    x.id,
+                    x.name,
+                    x.alias,
+                    x.email,
+                    x.phone,
+                    x.status,
+                    y.section
+                }
+            ).Where(x=> x.status == 1).ToList();
+
+            foreach(var item in datos)
+            {
+                dgvOperator.Rows.Add(item.id, item.name, item.alias, item.email, item.phone,item.section);
             }
         }
         #endregion
@@ -87,6 +154,10 @@ namespace operator_morena
             {
                 image_name = ofd.FileName;
                 pbImagen.Image = Image.FromFile(image_name);
+            }
+            else
+            {
+                pbImagen.Image = null;
             }
 
 
@@ -224,15 +295,15 @@ namespace operator_morena
             operators.observation = rtbComents.Text;
             operators.score = check_score();
             operators.id_sections = sections.id;
+            operators.status = 1;
             operators.image = ConvertImageToBinary(pbImagen.Image);
 
             db.Operators.Add(operators);
             db.SaveChanges();
 
             MessageBox.Show("Registro realizado con éxito", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            List<Operator> operator_s = db.Operators.ToList();
-            dgvOperator.DataSource = operator_s;
+            clean_fields();
+            fill_dgv();            
         }
         #endregion
 
@@ -311,5 +382,16 @@ namespace operator_morena
             chb4.Checked = false;
         }
         #endregion
+
+        private void dgvOperator_DoubleClick(object sender, EventArgs e)
+        {
+            ConnectionDB db = new ConnectionDB();
+            int index = dgvOperator.CurrentRow.Index;
+            int id = Convert.ToInt16(dgvOperator.Rows[index].Cells[0].Value.ToString());
+
+            Operator @operator = db.Operators.Where(x => x.id == id).FirstOrDefault();
+
+            pbImagen.Image = ConvertBinaryToImage(@operator.image);
+        }
     }
 }

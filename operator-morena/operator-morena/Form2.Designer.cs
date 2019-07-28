@@ -62,6 +62,12 @@
             this.cbSection = new System.Windows.Forms.ComboBox();
             this.cbMunicipality = new System.Windows.Forms.ComboBox();
             this.cbPopulation = new System.Windows.Forms.ComboBox();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOperator)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbImagen)).BeginInit();
@@ -162,12 +168,23 @@
             // 
             // dgvOperator
             // 
+            this.dgvOperator.AllowUserToAddRows = false;
+            this.dgvOperator.AllowUserToDeleteRows = false;
             this.dgvOperator.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvOperator.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOperator.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column6,
+            this.Column1,
+            this.Column2,
+            this.Column3,
+            this.Column4,
+            this.Column5});
             this.dgvOperator.Location = new System.Drawing.Point(9, 113);
             this.dgvOperator.Name = "dgvOperator";
+            this.dgvOperator.ReadOnly = true;
             this.dgvOperator.Size = new System.Drawing.Size(480, 613);
             this.dgvOperator.TabIndex = 1;
+            this.dgvOperator.DoubleClick += new System.EventHandler(this.dgvOperator_DoubleClick);
             // 
             // pbImagen
             // 
@@ -469,6 +486,43 @@
             this.cbPopulation.Size = new System.Drawing.Size(136, 21);
             this.cbPopulation.TabIndex = 31;
             // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "ID";
+            this.Column6.Name = "Column6";
+            this.Column6.ReadOnly = true;
+            this.Column6.Visible = false;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "NOMBRE";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "APODO";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "CORREO";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "TELEFONO";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "SECCION";
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            // 
             // wfDashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -549,5 +603,11 @@
         private System.Windows.Forms.ComboBox cbSection;
         private System.Windows.Forms.ComboBox cbMunicipality;
         private System.Windows.Forms.ComboBox cbPopulation;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
     }
 }
