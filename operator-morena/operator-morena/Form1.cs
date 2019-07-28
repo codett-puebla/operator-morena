@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
+using operator_morena.Connection;
+using operator_morena.Models;
 
 namespace operator_morena
 {
@@ -40,7 +42,9 @@ namespace operator_morena
 
         private void BtLogin_Click(object sender, EventArgs e)
         {
-            
+            ConnectionDB db = new ConnectionDB();
+            var datos = db.Users.ToList();
+
             Console.WriteLine("Entrando al sistema --> [" + tbPassword.Text + "]");
             this.nextWidnows.Show();
             this.nextWidnows.BringToFront();

@@ -9,11 +9,22 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
+using GMap.NET;
+using GMap.NET.WindowsForms.Markers;
+using GMap.NET.WindowsForms;
+using GMap.NET.MapProviders;
 
 namespace operator_morena
 {
     public partial class wfDashBoard : MaterialForm
     {
+        GMarkerGoogle marker;
+        GMapOverlay mapOverlay;
+
+        double LatIncial = 19.043719;
+        double LngIncial = -98.198911;
+
+
         public wfDashBoard()
         {
             InitializeComponent();
@@ -38,14 +49,34 @@ namespace operator_morena
             Application.Exit();
         }
 
-        private void TextBox1_TextChanged(object sender, EventArgs e)
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
+            string image_name;
+            OpenFileDialog ofd = new OpenFileDialog {
+                Filter = "Archivos de Imagen JPG|*.jpg|Todos los archivos|*.*",
+                FilterIndex = 1,
+                RestoreDirectory = true
+            };
+
+            if(ofd.ShowDialog() == DialogResult.OK)
+            {
+                image_name = ofd.FileName;
+                pbImagen.Image = Image.FromFile(image_name);
+            }
+
 
         }
 
-        private void TextBox2_TextChanged(object sender, EventArgs e)
+        private void wfDashBoard_Load(object sender, EventArgs e)
         {
-
+            gMapControl1.DragButton = MouseButtons.Left;
+            gMapControl1.CanDragMap = true;
+            gMapControl1.MapProvider = GMapProviders.GoogleMap;
+            gMapControl1.Position = new PointLatLng(LatIncial, LngIncial);
+            gMapControl1.MinZoom = 0;
+            gMapControl1.MaxZoom = 24;
+            gMapControl1.Zoom = 9;
+            gMapControl1.AutoScroll = true;
         }
     }
 }
