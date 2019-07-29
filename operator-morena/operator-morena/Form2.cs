@@ -151,6 +151,38 @@ namespace operator_morena
             }
         }
 
+        private string ConvertImageToBase64(Image image)
+        {
+            using (MemoryStream m = new MemoryStream())
+            {
+                if(image != null)
+                {
+                    image.Save(m, image.RawFormat);
+                    byte[] imageBytes = m.ToArray();
+
+                    // Convert byte[] to Base64 String
+                    string base64String = Convert.ToBase64String(imageBytes);
+                    return base64String;
+                }
+                else
+                {
+                    return "";
+                }
+            }
+        }
+
+        public Image ConvertBase64ToImage(string base64String)
+        {
+            // Convert base 64 string to byte[]
+            byte[] imageBytes = Convert.FromBase64String(base64String);
+            // Convert byte[] to Image
+            using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
+            {
+                Image image = Image.FromStream(ms, true);
+                return image;
+            }
+        }
+
         private void clean_fields()
         {
             tbName.Text = string.Empty;
@@ -334,7 +366,7 @@ namespace operator_morena
                         operators.score = Convert.ToInt16(item[5]);
                         operators.status = Convert.ToInt16(item[6]);
                         operators.id_sections = Convert.ToInt16(item[7]);
-                        operators.image = Encoding.ASCII.GetBytes(Convert.ToString(item[8]));
+                        operators.image = Convert.ToString(item[8]);
 
                         db.Operators.Add(operators);
                         db.SaveChanges();
@@ -402,7 +434,7 @@ namespace operator_morena
                 worksheet.Cells.Item[i, 6] = item.score;
                 worksheet.Cells.Item[i, 7] = item.status;
                 worksheet.Cells.Item[i, 8] = item.id_sections;
-                worksheet.Cells.Item[i, 9] = BitConverter.ToString(item.image);
+                worksheet.Cells.Item[i, 9] = item.image;
 
                 i = i + 1;
             }
@@ -413,6 +445,90 @@ namespace operator_morena
             workbook.Close();
 
             MessageBox.Show("Proceso terminado", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void csv_export()
+        {
+            DialogResult result = MessageBox.Show("¿Esta seguro que desea exportar sus datos de operador?", "Operador", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+
+            if (result != DialogResult.Yes)
+            {
+                return;
+            }
+
+            string text;
+            ConnectionDB db = new ConnectionDB();
+            SaveFileDialog saveFile = new SaveFileDialog
+            {
+                Title = "Guardar como",
+                Filter = "CSV Files (*.csv)|*.csv"
+            };
+
+            saveFile.ShowDialog();
+            if (string.IsNullOrEmpty(saveFile.FileName))
+            {
+                MessageBox.Show("Nombre no válido", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            List<Operator> operators = db.Operators.Where(x => x.status == 1).ToList();
+
+            foreach (Operator item in operators)
+            {
+                text = item.name + "," + item.alias 
+                    + "," + item.phone
+                    + "," + item.email
+                    + "," + item.observation
+                    + "," + item.score
+                    + "," + item.status
+                    + "," + item.id_sections
+                    + "," + item.image;
+                File.AppendAllText(saveFile.FileName, text);
+            }
+
+            MessageBox.Show("Proceso terminado", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void csv_import()
+        {
+            ConnectionDB db = new ConnectionDB();
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Filter = "CSV Files (*.csv)|*.csv",
+                Title = "Open file"
+            };
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                if (string.IsNullOrEmpty(ofd.FileName))
+                    return;
+
+                using (var reader = new StreamReader(ofd.FileName))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        var line = reader.ReadLine();
+                        var item = line.Split(',');
+
+                        Operator operators = new Operator();
+                        operators.name = Convert.ToString(item[0]);
+                        operators.alias = Convert.ToString(item[1]);
+                        operators.phone = Convert.ToString(item[2]);
+                        operators.email = Convert.ToString(item[3]);
+                        operators.observation = Convert.ToString(item[4]);
+                        operators.score = Convert.ToInt16(item[5]);
+                        operators.status = Convert.ToInt16(item[6]);
+                        operators.id_sections = Convert.ToInt16(item[7]);
+                        operators.image = Convert.ToString(item[8]);
+
+                        db.Operators.Add(operators);
+                        db.SaveChanges();
+                    }
+                }
+            }
+
+            MessageBox.Show("Proceso terminado", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            fill_dgv("");
         }
         #endregion
 
@@ -462,7 +578,7 @@ namespace operator_morena
             operators.score = check_score();
             operators.id_sections = sections.id;
             operators.status = 1;
-            operators.image = ConvertImageToBinary(pbImagen.BackgroundImage);
+            operators.image = ConvertImageToBase64(pbImagen.BackgroundImage);
 
             db.Operators.Add(operators);
             db.SaveChanges();
@@ -512,7 +628,7 @@ namespace operator_morena
             operators.status = 1;
             if (image_click)
             {
-                operators.image = ConvertImageToBinary(pbImagen.BackgroundImage);
+                operators.image = ConvertImageToBase64(pbImagen.BackgroundImage);
             }
             db.Entry(operators).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
@@ -556,7 +672,7 @@ namespace operator_morena
             Operator @operator = db.Operators.Where(x => x.id == id).FirstOrDefault();
             Section section = db.Sections.Where(x => x.id == @operator.id_sections).FirstOrDefault();
 
-            pbImagen.BackgroundImage = ConvertBinaryToImage(@operator.image);
+            pbImagen.BackgroundImage = ConvertBase64ToImage(@operator.image);
             tbName.Text = @operator.name;
             tbAlias.Text = @operator.alias;
             tbEmail.Text = @operator.email;
@@ -598,6 +714,21 @@ namespace operator_morena
                 tsbtnCancela.Visible = false;
             }
 
+        }
+
+        private void tsbtnImport_Click(object sender, EventArgs e)
+        {
+            csv_import();
+        }
+
+        private void tsbtnExport_Click(object sender, EventArgs e)
+        {
+            csv_export();
+        }
+
+        private void stbtSearch_Click(object sender, EventArgs e)
+        {
+            fill_dgv(tsbtnSearch.Text);
         }
         #endregion
 
@@ -680,20 +811,5 @@ namespace operator_morena
             chb4.Checked = false;
         }
         #endregion
-
-        private void tsbtnImport_Click(object sender, EventArgs e)
-        {
-            excel_import();
-        }
-
-        private void tsbtnExport_Click(object sender, EventArgs e)
-        {
-            excel_export();
-        }
-
-        private void stbtSearch_Click(object sender, EventArgs e)
-        {
-            fill_dgv(tsbtnSearch.Text);
-        }
     }
 }

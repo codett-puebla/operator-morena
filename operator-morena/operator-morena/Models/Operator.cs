@@ -17,6 +17,6 @@ namespace operator_morena.Models
         public int score { get; set; }
         public int status { get; set; }
         public int id_sections { get; set; }
-        public byte[] image { get; set; }
+        public string image { get; set; }
     }
 }
