@@ -15,6 +15,7 @@ using GMap.NET.WindowsForms;
 using GMap.NET.MapProviders;
 using operator_morena.Connection;
 using operator_morena.Models;
+using System.Data.OleDb;
 using System.IO;
 
 namespace operator_morena
@@ -23,125 +24,9 @@ namespace operator_morena
     {
         double LatIncial = 19.043719;
         double LngIncial = -98.198911;
-
-        #region FUNCIONES
-        private int check_score()
-        {
-            if (chb1.Checked)
-                return 1;
-            if (chb2.Checked)
-                return 2;
-            if (chb3.Checked)
-                return 3;
-            if (chb4.Checked)
-                return 4;
-            if (chb5.Checked)
-                return 5;
-            return 0;
-        }
-
-        private byte[] ConvertImageToBinary(Image img)
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                if(img != null)
-                {
-                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                    return ms.ToArray();
-                }
-                else
-                {
-                    return ms.ToArray();
-                }                
-            }
-        }
-
-        private Image ConvertBinaryToImage(byte[] data)
-        {
-            using (MemoryStream ms = new MemoryStream(data))
-            {
-                try
-                {
-                    return Image.FromStream(ms);
-                }
-                catch(Exception e)
-                {
-                    return null;
-                }
-                
-            }
-        }
-
-        private void clean_fields()
-        {
-            tbName.Text = string.Empty;
-            tbAlias.Text = string.Empty;
-            tbEmail.Text = string.Empty;
-            tbPhone.Text = string.Empty;
-
-            rtbComents.Text = string.Empty;
-
-            cbPopulation.Text = string.Empty;
-            cbMunicipality.Text = string.Empty;
-
-            chb1.Checked = false;
-            chb2.Checked = false;
-            chb3.Checked = false;
-            chb4.Checked = false;
-            chb5.Checked = false;
-
-            pbImagen.Image = null;
-        }
-
-        private void fill_dgv()
-        {
-            dgvOperator.Rows.Clear();
-            ConnectionDB db = new ConnectionDB();
-            var datos = db.Operators.Join(db.Sections, x => x.id_sections, y => y.id,
-                (x, y) => new
-                {
-                    x.id,
-                    x.name,
-                    x.alias,
-                    x.email,
-                    x.phone,
-                    x.status,
-                    y.section
-                }
-            ).Where(x=> x.status == 1).ToList();
-
-            foreach(var item in datos)
-            {
-                dgvOperator.Rows.Add(item.id, item.name, item.alias, item.email, item.phone,item.section);
-            }
-        }
-
-        private void cancel_fields()
-        {
-            tsbtnGuarda.Visible = false;
-            tsbtnCancela.Visible = false;
-            tsbtnNuevo.Visible = true;
-
-            tbName.Enabled = false;
-            tbAlias.Enabled = false;
-            tbEmail.Enabled = false;
-            tbPhone.Enabled = false;
-
-            rtbComents.Enabled = false;
-
-            chb1.Enabled = false;
-            chb2.Enabled = false;
-            chb3.Enabled = false;
-            chb4.Enabled = false;
-            chb5.Enabled = false;
-
-
-            cbSection.Enabled = false;
-            cbPopulation.Enabled = false;
-            cbMunicipality.Enabled = false;
-            clean_fields();
-        }
-        #endregion
+        private int id;
+        public int user_kind;
+        bool image_click = false;
 
         public wfDashBoard()
         {
@@ -179,13 +64,13 @@ namespace operator_morena
             if(ofd.ShowDialog() == DialogResult.OK)
             {
                 image_name = ofd.FileName;
-                pbImagen.Image = Image.FromFile(image_name);
+                pbImagen.BackgroundImage = Image.FromFile(image_name);
+                image_click = true;
             }
             else
             {
-                pbImagen.Image = null;
+                pbImagen.BackgroundImage = null;
             }
-
 
         }
 
@@ -200,94 +85,366 @@ namespace operator_morena
             gMapControl1.Zoom = 9;
             gMapControl1.AutoScroll = true;
 
+            //DEPENDIENDO EL TIPO DE USUARIO MOSTRAMOS LOS BOTONES CORRESPONDIENTES
+            if(user_kind == 1)
+            {
+                tsbtnNuevo.Visible = true;
+            }
+            else
+            {
+                tsbtnNuevo.Visible = false;
+            }
+
             ConnectionDB db = new ConnectionDB();
 
             List<string> sections = db.Sections.Select(x => x.section).Distinct().ToList();
-
             cbSection.Items.Clear();
             cbSection.DataSource = sections;
-            fill_dgv();
+            fill_dgv("");
         }
 
-        #region BOTONES
-        private void tsbtnNuevo_Click(object sender, EventArgs e)
+        #region FUNCIONES
+        private int check_score()
         {
-            tsbtnGuarda.Visible = true;
-            tsbtnCancela.Visible = true;
-            tsbtnNuevo.Visible = false;
-
-            tbName.Enabled = true;
-            tbAlias.Enabled = true;
-            tbEmail.Enabled = true;
-            tbPhone.Enabled = true;
-
-            rtbComents.Enabled = true;
-
-            chb1.Enabled = true;
-            chb2.Enabled = true;
-            chb3.Enabled = true;
-            chb4.Enabled = true;
-            chb5.Enabled = true;
-
-            cbSection.Enabled = true;
-            cbPopulation.Enabled = true;
-            cbMunicipality.Enabled = true;
-
-            clean_fields();
+            if (chb1.Checked)
+                return 1;
+            if (chb2.Checked)
+                return 2;
+            if (chb3.Checked)
+                return 3;
+            if (chb4.Checked)
+                return 4;
+            if (chb5.Checked)
+                return 5;
+            return 0;
         }
 
-        private void tsbtnCancela_Click(object sender, EventArgs e)
+        private byte[] ConvertImageToBinary(Image img)
         {
-            cancel_fields();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                if (img != null)
+                {
+                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    return ms.ToArray();
+                }
+                else
+                {
+                    return ms.ToArray();
+                }
+            }
         }
 
-        private void tsbtnGuarda_Click(object sender, EventArgs e)
+        private Image ConvertBinaryToImage(byte[] data)
+        {
+            using (MemoryStream ms = new MemoryStream(data))
+            {
+                try
+                {
+                    return Image.FromStream(ms);
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+
+            }
+        }
+
+        private void clean_fields()
+        {
+            tbName.Text = string.Empty;
+            tbAlias.Text = string.Empty;
+            tbEmail.Text = string.Empty;
+            tbPhone.Text = string.Empty;
+
+            rtbComents.Text = string.Empty;
+
+            cbPopulation.Text = string.Empty;
+            cbMunicipality.Text = string.Empty;
+
+            chb1.Checked = false;
+            chb2.Checked = false;
+            chb3.Checked = false;
+            chb4.Checked = false;
+            chb5.Checked = false;
+
+            pbImagen.BackgroundImage = null;
+        }
+
+        private void enable_disable_fields(bool option)
+        {
+            tbName.Enabled = option;
+            tbAlias.Enabled = option;
+            tbEmail.Enabled = option;
+            tbPhone.Enabled = option;
+
+            rtbComents.Enabled = option;
+
+            chb1.Enabled = option;
+            chb2.Enabled = option;
+            chb3.Enabled = option;
+            chb4.Enabled = option;
+            chb5.Enabled = option;
+
+
+            cbSection.Enabled = option;
+            cbPopulation.Enabled = option;
+            cbMunicipality.Enabled = option;
+
+            pbImagen.Enabled = option;
+        }
+
+        private void fill_dgv(string search_value)
+        {
+            dgvOperator.Rows.Clear();
+            ConnectionDB db = new ConnectionDB();
+            var datos = db.Operators.Join(db.Sections, x => x.id_sections, y => y.id,
+                (x, y) => new
+                {
+                    x.id,
+                    x.name,
+                    x.alias,
+                    x.email,
+                    x.phone,
+                    x.status,
+                    y.section,
+                    y.town_name,
+                    y.location_name
+                }
+            ).Where(x => x.status == 1);
+
+            if (!string.IsNullOrEmpty(search_value))
+            {
+                datos = datos.Where(x=> x.name.Contains(search_value) || 
+                                        x.alias.Contains(search_value) || 
+                                        x.email.Contains(search_value) || 
+                                        x.phone.Contains(search_value) || 
+                                        x.section.Contains(search_value) ||
+                                        x.town_name.Contains(search_value) ||
+                                        x.location_name.Contains(search_value));
+            }
+
+            var datos_f = datos.ToList();
+
+            foreach (var item in datos_f)
+            {
+                dgvOperator.Rows.Add(item.id, item.name, item.alias, item.email, item.phone, item.section, item.town_name, item.location_name);
+            }
+        }
+
+        private bool check_fields()
         {
             if (string.IsNullOrEmpty(tbName.Text))
             {
                 MessageBox.Show("Campo obligatorio", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tbName.Focus();
-                return;
+                return false;
             }
             if (string.IsNullOrEmpty(tbAlias.Text))
             {
                 MessageBox.Show("Campo obligatorio", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tbName.Focus();
-                return;
+                return false;
             }
             if (string.IsNullOrEmpty(tbEmail.Text))
             {
                 MessageBox.Show("Campo obligatorio", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tbEmail.Focus();
-                return;
+                return false;
             }
             if (string.IsNullOrEmpty(tbPhone.Text))
             {
                 MessageBox.Show("Campo obligatorio", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tbPhone.Focus();
-                return;
+                return false;
             }
-            if(chb1.Checked == false && chb2.Checked == false && chb3.Checked == false && chb4.Checked == false && chb5.Checked == false)
+            if (chb1.Checked == false && chb2.Checked == false && chb3.Checked == false && chb4.Checked == false && chb5.Checked == false)
             {
                 MessageBox.Show("Campo obligatorio", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                return false;
             }
             if (string.IsNullOrEmpty(cbSection.Text))
             {
                 MessageBox.Show("Campo obligatorio", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 cbSection.Focus();
-                return;
+                return false;
             }
             if (string.IsNullOrEmpty(cbMunicipality.Text))
             {
                 MessageBox.Show("Campo obligatorio", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 cbMunicipality.Focus();
-                return;
+                return false;
             }
             if (string.IsNullOrEmpty(cbPopulation.Text))
             {
                 MessageBox.Show("Campo obligatorio", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 cbPopulation.Focus();
+                return false;
+            }
+
+            return true;
+        }
+
+        private void new_buttons()
+        {
+            //BOTONES
+            tsbtDelete.Visible = false;
+            tsbtnNuevo.Visible = true;
+            tsbtnEdita.Visible = false;
+            tsbtnSaveEdit.Visible = false;
+
+            tsbtnGuarda.Visible = false;
+            tsbtnCancela.Visible = false;
+        }
+
+        private void excel_import()
+        {
+            ConnectionDB db = new ConnectionDB();
+            OleDbConnection connection;
+            OleDbDataAdapter dataAdapter;
+            DataTable dataTable = new DataTable();
+            DataSet dataSet = new DataSet();
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Filter = "Excel 2007|*.xlsx",
+                Title = "Open file"
+            };
+
+            if(ofd.ShowDialog() == DialogResult.OK)
+            {
+                if (string.IsNullOrEmpty(ofd.FileName))
+                    return;
+                connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + ofd.FileName + ";Extended Properties=Excel 12.0;");
+
+                try
+                {
+                    dataAdapter = new OleDbDataAdapter("SELECT * FROM [Hoja2$]",connection);
+                    connection.Open();
+                    dataAdapter.Fill(dataSet, "MyData");
+                    dataTable = dataSet.Tables["MyData"];
+                    foreach(DataRow item in dataTable.Rows)
+                    {
+                        Operator operators = new Operator();
+                        operators.name = Convert.ToString(item[0]);
+                        operators.alias = Convert.ToString(item[1]);
+                        operators.phone = Convert.ToString(item[2]);
+                        operators.email = Convert.ToString(item[3]);
+                        operators.observation = Convert.ToString(item[4]);
+                        operators.score = Convert.ToInt16(item[5]);
+                        operators.status = Convert.ToInt16(item[6]);
+                        operators.id_sections = Convert.ToInt16(item[7]);
+                        operators.image = Encoding.ASCII.GetBytes(Convert.ToString(item[8]));
+
+                        db.Operators.Add(operators);
+                        db.SaveChanges();
+                    }
+
+                    MessageBox.Show("Proceso terminado", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    fill_dgv("");
+                }
+                catch(Exception e)
+                {
+
+                }
+            }
+        }
+
+        private void excel_export()
+        {
+            DialogResult result = MessageBox.Show("¿Esta seguro que desea exportar sus datos de operador?", "Operador", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+
+            if (result != DialogResult.Yes)
+            {
+                return;
+            }
+
+            int i = 2;
+            ConnectionDB db = new ConnectionDB();
+            SaveFileDialog saveFile = new SaveFileDialog {
+                Title = "Guardar como",
+                Filter = "Excel |*.xlsx"
+            };
+
+            saveFile.ShowDialog();
+            if (string.IsNullOrEmpty(saveFile.FileName))
+            {
+                MessageBox.Show("Nombre no válido", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            Microsoft.Office.Interop.Excel.Application application = new Microsoft.Office.Interop.Excel.Application();
+            Microsoft.Office.Interop.Excel.Workbook workbook;
+            Microsoft.Office.Interop.Excel.Worksheet worksheet;
+
+            workbook = application.Workbooks.Add();
+            worksheet = workbook.Worksheets.Add();
+
+            List<Operator> operators = db.Operators.Where(x => x.status == 1).ToList();
+
+            worksheet.Cells.Item[1, 1] = "Nombre";
+            worksheet.Cells.Item[1, 2] = "Alias";
+            worksheet.Cells.Item[1, 3] = "Teléfono";
+            worksheet.Cells.Item[1, 4] = "Correo";
+            worksheet.Cells.Item[1, 5] = "Observaciones";
+            worksheet.Cells.Item[1, 6] = "Puntaje";
+            worksheet.Cells.Item[1, 7] = "Status";
+            worksheet.Cells.Item[1, 8] = "id_secciones";
+            worksheet.Cells.Item[1, 9] = "imagen";
+
+            foreach(Operator item in operators)
+            {
+                worksheet.Cells.Item[i, 1] = item.name;
+                worksheet.Cells.Item[i, 2] = item.alias;
+                worksheet.Cells.Item[i, 3] = item.phone;
+                worksheet.Cells.Item[i, 4] = item.email;
+                worksheet.Cells.Item[i, 5] = item.observation;
+                worksheet.Cells.Item[i, 6] = item.score;
+                worksheet.Cells.Item[i, 7] = item.status;
+                worksheet.Cells.Item[i, 8] = item.id_sections;
+                worksheet.Cells.Item[i, 9] = BitConverter.ToString(item.image);
+
+                i = i + 1;
+            }
+
+            workbook.SaveAs(saveFile.FileName);
+
+            application.Application.Visible = false;
+            workbook.Close();
+
+            MessageBox.Show("Proceso terminado", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        #endregion
+
+        #region BOTONES
+        private void tsbtnNuevo_Click(object sender, EventArgs e)
+        {
+            enable_disable_fields(true);
+            clean_fields();
+            image_click = false;
+            id = 0;
+
+            //BOTONES
+            tsbtDelete.Visible = false;
+            tsbtnNuevo.Visible = false;
+            tsbtnEdita.Visible = false;
+            tsbtnSaveEdit.Visible = false;
+
+            tsbtnGuarda.Visible = true;
+            tsbtnCancela.Visible = true;
+        }
+
+        private void tsbtnCancela_Click(object sender, EventArgs e)
+        {
+            clean_fields();
+            enable_disable_fields(false);
+            new_buttons();
+        }
+
+        private void tsbtnGuarda_Click(object sender, EventArgs e)
+        {
+            if (!check_fields())
+            {
                 return;
             }
 
@@ -305,24 +462,157 @@ namespace operator_morena
             operators.score = check_score();
             operators.id_sections = sections.id;
             operators.status = 1;
-            operators.image = ConvertImageToBinary(pbImagen.Image);
+            operators.image = ConvertImageToBinary(pbImagen.BackgroundImage);
 
             db.Operators.Add(operators);
             db.SaveChanges();
 
             MessageBox.Show("Registro realizado con éxito", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Information);
             clean_fields();
-            cancel_fields();
-            fill_dgv();            
+            enable_disable_fields(false);
+            new_buttons();
+            fill_dgv("");            
+        }
+
+        private void tsbtnEdita_Click(object sender, EventArgs e)
+        {
+            enable_disable_fields(true);
+            image_click = false;
+
+            //BOTONES
+            tsbtDelete.Visible = false;
+            tsbtnNuevo.Visible = false;
+            tsbtnEdita.Visible = false;
+            tsbtnSaveEdit.Visible = true;
+
+            tsbtnGuarda.Visible = false;
+            tsbtnCancela.Visible = true;
+        }
+
+        private void tsbtnSaveEdit_Click(object sender, EventArgs e)
+        {
+            ConnectionDB db = new ConnectionDB();
+
+            if (!check_fields())
+            {
+                return;
+            }
+
+            Operator operators = db.Operators.Where(x => x.id == id).FirstOrDefault();
+            Section sections = db.Sections.Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text && x.location_name == cbPopulation.Text)
+                            .FirstOrDefault();
+
+            operators.name = tbName.Text;
+            operators.alias = tbAlias.Text;
+            operators.email = tbEmail.Text;
+            operators.phone = tbPhone.Text;
+            operators.observation = rtbComents.Text;
+            operators.score = check_score();
+            operators.id_sections = sections.id;
+            operators.status = 1;
+            if (image_click)
+            {
+                operators.image = ConvertImageToBinary(pbImagen.BackgroundImage);
+            }
+            db.Entry(operators).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+
+            MessageBox.Show("Registro actualizado con éxito", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            clean_fields();
+            enable_disable_fields(false);
+            new_buttons();
+            fill_dgv("");
+        }
+
+        private void tsbtDelete_Click_1(object sender, EventArgs e)
+        {
+            ConnectionDB db = new ConnectionDB();
+            DialogResult result = MessageBox.Show("¿Esta seguro que desea eliminar este registro?", "Operador", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+
+            if (result == DialogResult.Yes)
+            {
+                Operator operators = db.Operators.Where(x => x.id == id).FirstOrDefault();
+                operators.status = 0;
+                db.Entry(operators).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+
+                MessageBox.Show("Registro eliminado con éxito", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                clean_fields();
+                enable_disable_fields(false);
+                new_buttons();
+                fill_dgv("");
+            }
+        }
+
+        private void dgvOperator_DoubleClick(object sender, EventArgs e)
+        {
+            if (dgvOperator.Rows.Count == 0)
+                return;
+
+            ConnectionDB db = new ConnectionDB();
+            int index = dgvOperator.CurrentRow.Index;
+            id = Convert.ToInt16(dgvOperator.Rows[index].Cells[0].Value.ToString());
+
+            Operator @operator = db.Operators.Where(x => x.id == id).FirstOrDefault();
+            Section section = db.Sections.Where(x => x.id == @operator.id_sections).FirstOrDefault();
+
+            pbImagen.BackgroundImage = ConvertBinaryToImage(@operator.image);
+            tbName.Text = @operator.name;
+            tbAlias.Text = @operator.alias;
+            tbEmail.Text = @operator.email;
+            tbPhone.Text = @operator.phone;
+            rtbComents.Text = @operator.observation;
+
+            switch (@operator.score)
+            {
+                case 1:
+                    chb1.Checked = true;
+                    break;
+                case 2:
+                    chb2.Checked = true;
+                    break;
+                case 3:
+                    chb3.Checked = true;
+                    break;
+                case 4:
+                    chb4.Checked = true;
+                    break;
+                case 5:
+                    chb5.Checked = true;
+                    break;
+            }
+
+            cbSection.Text = section.section;
+            cbMunicipality.Text = section.town_name;
+            cbPopulation.Text = section.location_name;
+
+            if (user_kind == 1)
+            {
+                //BOTONES
+                tsbtDelete.Visible = true;
+                tsbtnNuevo.Visible = true;
+                tsbtnEdita.Visible = true;
+                tsbtnSaveEdit.Visible = false;
+
+                tsbtnGuarda.Visible = false;
+                tsbtnCancela.Visible = false;
+            }
+
         }
         #endregion
 
         #region COMBO BOX
         private void cbSection_SelectedIndexChanged(object sender, EventArgs e)
         {
+            cbMunicipality.Text = string.Empty;
+            cbPopulation.Text = string.Empty;
+        }
+
+        private void cbMunicipality_Click(object sender, EventArgs e)
+        {
             cbMunicipality.Items.Clear();
             cbPopulation.Items.Clear();
-            
+
             ConnectionDB db = new ConnectionDB();
 
             List<string> municipality = db.Sections.Where(x => x.section == cbSection.Text).Select(x => x.town_name).Distinct().ToList();
@@ -331,12 +621,9 @@ namespace operator_morena
             {
                 cbMunicipality.Items.Add(item);
             }
-
-            cbMunicipality.Text = string.Empty;
-            cbPopulation.Text = string.Empty;
         }
 
-        private void cbMunicipality_SelectedIndexChanged(object sender, EventArgs e)
+        private void cbPopulation_Click(object sender, EventArgs e)
         {
             cbPopulation.Items.Clear();
             ConnectionDB db = new ConnectionDB();
@@ -349,6 +636,7 @@ namespace operator_morena
                 cbPopulation.Items.Add(item);
             }
         }
+
         #endregion
 
         #region CHECKBOX
@@ -393,44 +681,19 @@ namespace operator_morena
         }
         #endregion
 
-        private void dgvOperator_DoubleClick(object sender, EventArgs e)
+        private void tsbtnImport_Click(object sender, EventArgs e)
         {
-            ConnectionDB db = new ConnectionDB();
-            int index = dgvOperator.CurrentRow.Index;
-            int id = Convert.ToInt16(dgvOperator.Rows[index].Cells[0].Value.ToString());
-
-            Operator @operator = db.Operators.Where(x => x.id == id).FirstOrDefault();
-
-            pbImagen.Image = ConvertBinaryToImage(@operator.image);
-            tbName.Text = @operator.name;
-            tbAlias.Text = @operator.alias;
-            tbEmail.Text = @operator.email;
-            tbPhone.Text = @operator.phone;
-            rtbComents.Text = @operator.observation;
-
-            switch (@operator.score)
-            {
-                case 1:
-                    chb1.Checked = true;
-                    break;
-                case 2:
-                    chb2.Checked = true;
-                    break;
-                case 3:
-                    chb3.Checked = true;
-                    break;
-                case 4:
-                    chb4.Checked = true;
-                    break;
-                case 5:
-                    chb5.Checked = true;
-                    break;
-            }
+            excel_import();
         }
 
-        private void cbMunicipality_Click(object sender, EventArgs e)
+        private void tsbtnExport_Click(object sender, EventArgs e)
         {
+            excel_export();
+        }
 
+        private void stbtSearch_Click(object sender, EventArgs e)
+        {
+            fill_dgv(tsbtnSearch.Text);
         }
     }
 }

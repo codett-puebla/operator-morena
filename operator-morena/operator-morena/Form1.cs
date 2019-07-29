@@ -16,7 +16,6 @@ namespace operator_morena
 {
     public partial class scrLogin : MaterialForm
     {
-        private wfDashBoard nextWidnows;
         public scrLogin()
         {
             InitializeComponent();
@@ -36,7 +35,6 @@ namespace operator_morena
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.nextWidnows = new wfDashBoard();
 
         }
 
@@ -62,8 +60,10 @@ namespace operator_morena
             }
             
             Console.WriteLine("Entrando al sistema --> [" + tbPassword.Text + "]");
-            this.nextWidnows.Show();
-            this.nextWidnows.BringToFront();
+            wfDashBoard wf = new wfDashBoard();
+            wf.user_kind = users.user_kind;
+            wf.Show();
+            wf.BringToFront();
             this.Hide();
         }
     }
