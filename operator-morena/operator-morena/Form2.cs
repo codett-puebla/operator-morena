@@ -17,6 +17,7 @@ using operator_morena.Connection;
 using operator_morena.Models;
 using System.Data.OleDb;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace operator_morena
 {
@@ -76,14 +77,14 @@ namespace operator_morena
 
         private void wfDashBoard_Load(object sender, EventArgs e)
         {
-            gMapControl1.DragButton = MouseButtons.Left;
-            gMapControl1.CanDragMap = true;
-            gMapControl1.MapProvider = GMapProviders.GoogleMap;
-            gMapControl1.Position = new PointLatLng(LatIncial, LngIncial);
-            gMapControl1.MinZoom = 0;
-            gMapControl1.MaxZoom = 24;
-            gMapControl1.Zoom = 9;
-            gMapControl1.AutoScroll = true;
+            //gMapControl1.DragButton = MouseButtons.Left;
+            //gMapControl1.CanDragMap = true;
+            //gMapControl1.MapProvider = GMapProviders.GoogleMap;
+            //gMapControl1.Position = new PointLatLng(LatIncial, LngIncial);
+            //gMapControl1.MinZoom = 0;
+            //gMapControl1.MaxZoom = 24;
+            //gMapControl1.Zoom = 9;
+            //gMapControl1.AutoScroll = true;
 
             //DEPENDIENDO EL TIPO DE USUARIO MOSTRAMOS LOS BOTONES CORRESPONDIENTES
             if(user_kind == 1)
@@ -97,9 +98,9 @@ namespace operator_morena
 
             ConnectionDB db = new ConnectionDB();
 
-            List<string> sections = db.Sections.Select(x => x.section).Distinct().ToList();
-            cbSection.Items.Clear();
-            cbSection.DataSource = sections;
+            List<string> sections = db.Sections.Select(x => x.town_name).Distinct().ToList();
+            cbMunicipality.Items.Clear();
+            cbMunicipality.DataSource = sections;
             fill_dgv("");
         }
 
@@ -178,19 +179,43 @@ namespace operator_morena
             // Convert byte[] to Image
             using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
             {
-                Image image = Image.FromStream(ms, true);
-                return image;
+                try
+                {
+                    Image image = Image.FromStream(ms, true);
+                    return image;
+                }
+                catch(Exception e)
+                {
+                    return null;
+                }
             }
+        }
+
+        public string GetMD5(string str)
+        {
+            MD5 md5 = MD5CryptoServiceProvider.Create();
+            ASCIIEncoding encoding = new ASCIIEncoding();
+            byte[] stream = null;
+            StringBuilder sb = new StringBuilder();
+            stream = md5.ComputeHash(encoding.GetBytes(str));
+            for (int i = 0; i < stream.Length; i++) sb.AppendFormat("{0:x2}", stream[i]);
+            return sb.ToString();
         }
 
         private void clean_fields()
         {
+            tbSOperador.Text = string.Empty;
+
             tbName.Text = string.Empty;
+            tbLastName.Text = string.Empty;
+            tbMLastName.Text = string.Empty;
             tbAlias.Text = string.Empty;
             tbEmail.Text = string.Empty;
             tbPhone.Text = string.Empty;
+            tbAddress.Text = string.Empty;
 
             rtbComents.Text = string.Empty;
+            rtbMunicipality.Text = string.Empty;
 
             cbPopulation.Text = string.Empty;
             cbMunicipality.Text = string.Empty;
@@ -207,11 +232,15 @@ namespace operator_morena
         private void enable_disable_fields(bool option)
         {
             tbName.Enabled = option;
+            tbLastName.Enabled = option;
+            tbMLastName.Enabled = option;
             tbAlias.Enabled = option;
             tbEmail.Enabled = option;
             tbPhone.Enabled = option;
+            tbAddress.Enabled = option;
 
             rtbComents.Enabled = option;
+            rtbMunicipality.Enabled = option;
 
             chb1.Enabled = option;
             chb2.Enabled = option;
@@ -279,21 +308,10 @@ namespace operator_morena
                 tbName.Focus();
                 return false;
             }
-            if (string.IsNullOrEmpty(tbEmail.Text))
-            {
-                MessageBox.Show("Campo obligatorio", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tbEmail.Focus();
-                return false;
-            }
             if (string.IsNullOrEmpty(tbPhone.Text))
             {
                 MessageBox.Show("Campo obligatorio", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tbPhone.Focus();
-                return false;
-            }
-            if (chb1.Checked == false && chb2.Checked == false && chb3.Checked == false && chb4.Checked == false && chb5.Checked == false)
-            {
-                MessageBox.Show("Campo obligatorio", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             if (string.IsNullOrEmpty(cbSection.Text))
@@ -325,6 +343,7 @@ namespace operator_morena
             tsbtnNuevo.Visible = true;
             tsbtnEdita.Visible = false;
             tsbtnSaveEdit.Visible = false;
+            tsbtnSubOperator.Visible = false;
 
             tsbtnGuarda.Visible = false;
             tsbtnCancela.Visible = false;
@@ -475,14 +494,22 @@ namespace operator_morena
 
             foreach (Operator item in operators)
             {
-                text = item.name + "," + item.alias 
+                text = item.name
+                    + "," + item.last_name
+                    + "," + item.m_last_name
+                    + "," + item.alias 
                     + "," + item.phone
                     + "," + item.email
+                    + "," + item.address
                     + "," + item.observation
+                    + "," + item.municipality
                     + "," + item.score
                     + "," + item.status
                     + "," + item.id_sections
-                    + "," + item.image;
+                    + "," + item.image
+                    + "," + item.id_operators_key
+                    + "," + item.operators_key
+                    + System.Environment.NewLine;
                 File.AppendAllText(saveFile.FileName, text);
             }
 
@@ -512,14 +539,20 @@ namespace operator_morena
 
                         Operator operators = new Operator();
                         operators.name = Convert.ToString(item[0]);
-                        operators.alias = Convert.ToString(item[1]);
-                        operators.phone = Convert.ToString(item[2]);
-                        operators.email = Convert.ToString(item[3]);
-                        operators.observation = Convert.ToString(item[4]);
-                        operators.score = Convert.ToInt16(item[5]);
-                        operators.status = Convert.ToInt16(item[6]);
-                        operators.id_sections = Convert.ToInt16(item[7]);
-                        operators.image = Convert.ToString(item[8]);
+                        operators.last_name = Convert.ToString(item[1]);
+                        operators.m_last_name = Convert.ToString(item[2]);
+                        operators.alias = Convert.ToString(item[3]);
+                        operators.phone = Convert.ToString(item[4]);
+                        operators.email = Convert.ToString(item[5]);
+                        operators.address = Convert.ToString(item[6]);
+                        operators.observation = Convert.ToString(item[7]);
+                        operators.municipality = Convert.ToString(item[8]);
+                        operators.score = Convert.ToInt16(item[9]);
+                        operators.status = Convert.ToInt16(item[10]);
+                        operators.id_sections = Convert.ToInt16(item[11]);
+                        operators.image = Convert.ToString(item[12]);
+                        operators.id_operators_key = Convert.ToString(item[13]);
+                        operators.operators_key = Convert.ToString(item[14]);
 
                         db.Operators.Add(operators);
                         db.SaveChanges();
@@ -545,6 +578,7 @@ namespace operator_morena
             tsbtnNuevo.Visible = false;
             tsbtnEdita.Visible = false;
             tsbtnSaveEdit.Visible = false;
+            tsbtnSubOperator.Visible = false;
 
             tsbtnGuarda.Visible = true;
             tsbtnCancela.Visible = true;
@@ -571,14 +605,19 @@ namespace operator_morena
 
             Operator operators = new Operator();
             operators.name = tbName.Text;
+            operators.last_name = tbLastName.Text;
+            operators.m_last_name = tbMLastName.Text;
             operators.alias = tbAlias.Text;
             operators.email = tbEmail.Text;
             operators.phone = tbPhone.Text;
+            operators.address = tbAddress.Text;
             operators.observation = rtbComents.Text;
+            operators.municipality = rtbMunicipality.Text;
             operators.score = check_score();
             operators.id_sections = sections.id;
             operators.status = 1;
             operators.image = ConvertImageToBase64(pbImagen.BackgroundImage);
+            operators.operators_key = GetMD5(tbName.Text + "-" + tbLastName.Text + "-" + tbMLastName.Text + "-" + tbAlias.Text);
 
             db.Operators.Add(operators);
             db.SaveChanges();
@@ -600,6 +639,7 @@ namespace operator_morena
             tsbtnNuevo.Visible = false;
             tsbtnEdita.Visible = false;
             tsbtnSaveEdit.Visible = true;
+            tsbtnSubOperator.Visible = false;
 
             tsbtnGuarda.Visible = false;
             tsbtnCancela.Visible = true;
@@ -619,10 +659,14 @@ namespace operator_morena
                             .FirstOrDefault();
 
             operators.name = tbName.Text;
+            operators.last_name = tbLastName.Text;
+            operators.m_last_name = tbMLastName.Text;
             operators.alias = tbAlias.Text;
             operators.email = tbEmail.Text;
             operators.phone = tbPhone.Text;
+            operators.address = tbAddress.Text;
             operators.observation = rtbComents.Text;
+            operators.municipality = rtbMunicipality.Text;
             operators.score = check_score();
             operators.id_sections = sections.id;
             operators.status = 1;
@@ -670,14 +714,20 @@ namespace operator_morena
             id = Convert.ToInt16(dgvOperator.Rows[index].Cells[0].Value.ToString());
 
             Operator @operator = db.Operators.Where(x => x.id == id).FirstOrDefault();
+            Operator s_operator = db.Operators.Where(x => x.operators_key == @operator.id_operators_key).FirstOrDefault();
+
             Section section = db.Sections.Where(x => x.id == @operator.id_sections).FirstOrDefault();
 
             pbImagen.BackgroundImage = ConvertBase64ToImage(@operator.image);
             tbName.Text = @operator.name;
+            tbLastName.Text = @operator.last_name;
+            tbMLastName.Text = @operator.m_last_name;
             tbAlias.Text = @operator.alias;
             tbEmail.Text = @operator.email;
             tbPhone.Text = @operator.phone;
+            tbAddress.Text = @operator.address;
             rtbComents.Text = @operator.observation;
+            rtbMunicipality.Text = @operator.municipality;
 
             switch (@operator.score)
             {
@@ -702,6 +752,15 @@ namespace operator_morena
             cbMunicipality.Text = section.town_name;
             cbPopulation.Text = section.location_name;
 
+            if(s_operator != null)
+            {
+                tbSOperador.Text = s_operator.name + " " + s_operator.last_name + " " + s_operator.m_last_name;
+            }
+            else
+            {
+                tbSOperador.Text = string.Empty;
+            }
+
             if (user_kind == 1)
             {
                 //BOTONES
@@ -709,6 +768,7 @@ namespace operator_morena
                 tsbtnNuevo.Visible = true;
                 tsbtnEdita.Visible = true;
                 tsbtnSaveEdit.Visible = false;
+                tsbtnSubOperator.Visible = true;
 
                 tsbtnGuarda.Visible = false;
                 tsbtnCancela.Visible = false;
@@ -733,24 +793,23 @@ namespace operator_morena
         #endregion
 
         #region COMBO BOX
-        private void cbSection_SelectedIndexChanged(object sender, EventArgs e)
+        private void cbMunicipality_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cbMunicipality.Text = string.Empty;
+            cbSection.Text = string.Empty;
             cbPopulation.Text = string.Empty;
         }
 
-        private void cbMunicipality_Click(object sender, EventArgs e)
+        private void cbSection_Click(object sender, EventArgs e)
         {
-            cbMunicipality.Items.Clear();
+            ConnectionDB db = new ConnectionDB();
+            cbSection.Items.Clear();
             cbPopulation.Items.Clear();
 
-            ConnectionDB db = new ConnectionDB();
+            List<string> section = db.Sections.Where(x => x.town_name == cbMunicipality.Text).Select(x => x.section).Distinct().ToList();
 
-            List<string> municipality = db.Sections.Where(x => x.section == cbSection.Text).Select(x => x.town_name).Distinct().ToList();
-
-            foreach (string item in municipality)
+            foreach(string item in section)
             {
-                cbMunicipality.Items.Add(item);
+                cbSection.Items.Add(item);
             }
         }
 
@@ -811,5 +870,17 @@ namespace operator_morena
             chb4.Checked = false;
         }
         #endregion
+
+        private void tsbtnSubOperator_Click(object sender, EventArgs e)
+        {
+            ConnectionDB db = new ConnectionDB();
+
+            string operators_key = db.Operators.Where(x => x.id == id).Select(x => x.operators_key).FirstOrDefault();
+
+            scrSubOperator form = new scrSubOperator();
+            form.operators_key = operators_key;
+            form.ShowDialog();
+            form.BringToFront();
+        }
     }
 }

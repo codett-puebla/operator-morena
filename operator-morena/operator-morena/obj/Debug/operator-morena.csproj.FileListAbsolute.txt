@@ -41,3 +41,8 @@ E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\Newtonsoft.J
 E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\System.Data.SQLite.xml
 E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\System.Data.SQLite.dll.config
 E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\AjaxMin.dll
+E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\operator-morena.exe.manifest
+E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\operator-morena.application
+E:\GitHub\operator-morena\operator-morena\operator-morena\obj\Debug\operator-morena.exe.manifest
+E:\GitHub\operator-morena\operator-morena\operator-morena\obj\Debug\operator-morena.application
+E:\GitHub\operator-morena\operator-morena\operator-morena\obj\Debug\operator_morena.scrSubOperator.resources
