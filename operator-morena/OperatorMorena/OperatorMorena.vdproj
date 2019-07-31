@@ -39,6 +39,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_3C6A21EB3ED94CE29C5F7C6929F27D66"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_3C97657CB3955EB6504FD85DB50E5983"
         "OwnerKey" = "8:_19A5422098B94857B847DBF328C69772"
         "MsmSig" = "8:_UNDEFINED"
@@ -131,6 +137,12 @@
         {
         "MsmKey" = "8:_E0F455D23ED1C327886ACCD5E6EB081C"
         "OwnerKey" = "8:_33474AEB00E5B427B216D5F55E7CE1CE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E11C655003044E57AFCFBAAC5D8F19D9"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -366,6 +378,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3C6A21EB3ED94CE29C5F7C6929F27D66"
+            {
+            "SourcePath" = "8:..\\operator-morena\\DataBase\\dbMorena_log.ldf"
+            "TargetName" = "8:dbMorena_log.ldf"
+            "Tag" = "8:"
+            "Folder" = "8:_FAEDC3CFC94F48AD84C1A52441E103AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3C97657CB3955EB6504FD85DB50E5983"
@@ -616,6 +648,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E11C655003044E57AFCFBAAC5D8F19D9"
+            {
+            "SourcePath" = "8:..\\operator-morena\\DataBase\\dbMorena.mdf"
+            "TargetName" = "8:dbMorena.mdf"
+            "Tag" = "8:"
+            "Folder" = "8:_FAEDC3CFC94F48AD84C1A52441E103AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_FA5A2831E242C6C69F4C69EB6DCA4DF0"
             {
             "AssemblyRegister" = "3:1"
@@ -705,6 +757,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_FAEDC3CFC94F48AD84C1A52441E103AA"
+                    {
+                    "Name" = "8:DataBase"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_1F57AE0530C0476CBAE73DF5479D7D54"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_B1196D5EF31A4D028BB0D7C919EE39B2"
@@ -735,7 +798,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:OperatorMorena"
         "ProductCode" = "8:{A622C4D9-5E6B-4AD7-AFCA-66661E620695}"
-        "PackageCode" = "8:{FE8D4E9E-1A17-44E4-BB09-77A75C9C76B6}"
+        "PackageCode" = "8:{E7468245-5863-446C-ACD7-2BD028038AB5}"
         "UpgradeCode" = "8:{53808925-7908-465C-B042-B213236BA466}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

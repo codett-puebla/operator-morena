@@ -748,8 +748,8 @@ namespace operator_morena
                     break;
             }
 
-            cbSection.Text = section.section;
             cbMunicipality.Text = section.town_name;
+            cbSection.Text = section.section;            
             cbPopulation.Text = section.location_name;
 
             if(s_operator != null)
