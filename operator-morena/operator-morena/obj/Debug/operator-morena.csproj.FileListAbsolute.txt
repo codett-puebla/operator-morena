@@ -46,3 +46,7 @@ E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\operator-mor
 E:\GitHub\operator-morena\operator-morena\operator-morena\obj\Debug\operator-morena.exe.manifest
 E:\GitHub\operator-morena\operator-morena\operator-morena\obj\Debug\operator-morena.application
 E:\GitHub\operator-morena\operator-morena\operator-morena\obj\Debug\operator_morena.scrSubOperator.resources
+E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\Google.Maps.dll
+E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\ShaperRater.dll
+E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\ShaperRater.pdb
+E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\ShaperRater.xml

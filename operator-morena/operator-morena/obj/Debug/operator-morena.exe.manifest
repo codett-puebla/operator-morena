@@ -115,6 +115,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Google.Maps.dll" size="113664">
+      <assemblyIdentity name="Google.Maps" version="0.32.0.0" publicKeyToken="4AA992BB5D22D4FF" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>1t5ohT4nsNJrBeiXhssjP45AU8rW7L9dgZeAhRmN0sw=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MaterialSkin.dll" size="587776">
       <assemblyIdentity name="MaterialSkin" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -139,14 +151,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="operator-morena.exe" size="254944">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="operator-morena.exe" size="287712">
       <assemblyIdentity name="operator-morena" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>bJ3e3rExwMXQoXqIBsRVaXuLHTtTMlNcfjuMcNO/XDw=</dsig:DigestValue>
+        <dsig:DigestValue>5AIlU/7EfuY/RUIW0TUD2hX+kGLGqy6Rw8o3OGBEJCc=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ShaperRater.dll" size="26112">
+      <assemblyIdentity name="ShaperRater" version="1.0.7155.36703" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>dkr7GAguPqqvdeXVgXYdzZ+/xe68kK/Urn6LW9H5gTg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -192,7 +216,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>UO/o2cQte7qJGNiwacIsCV0mo4sAvVAUOi0rqkOfWqI=</dsig:DigestValue>
+      <dsig:DigestValue>m/TpY70TdkjT+yWVWmURgywYVXdY4YYty/AL3C9S/bQ=</dsig:DigestValue>
     </hash>
   </file>
   <file name="DataBase\dbMorena_log.ldf" size="8388608" writeableType="applicationData">
@@ -201,7 +225,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>wNDVoKZHFsmdOG+FDDchm/M8wVSq/vN3yTnrZBS9Ov0=</dsig:DigestValue>
+      <dsig:DigestValue>aIVjDDxlwwwAd25os3nMhgOeCEM7DH8R+nz6o9j/Wv8=</dsig:DigestValue>
     </hash>
   </file>
   <file name="man.ico" size="15417">
@@ -213,13 +237,13 @@
       <dsig:DigestValue>x67BeHZxigFzdb+N+NnVM+r4ema3QUobXGLxHKDx0tA=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="operator-morena.exe.config" size="2428">
+  <file name="operator-morena.exe.config" size="2669">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>DwX0njccLfIgSoKyYnLXOu+7nDN7qUz2NEl5HuPfFuM=</dsig:DigestValue>
+      <dsig:DigestValue>a4PKdswY/EKVsbNM3cxR2ZfX55oCRDlhQSwJ3YPma+o=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

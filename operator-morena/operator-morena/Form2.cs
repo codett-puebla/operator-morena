@@ -18,6 +18,9 @@ using operator_morena.Models;
 using System.Data.OleDb;
 using System.IO;
 using System.Security.Cryptography;
+using Google.Maps;
+using Google.Maps.Geocoding;
+using Placemark = GMap.NET.Placemark;
 
 namespace operator_morena
 {
@@ -28,6 +31,9 @@ namespace operator_morena
         private int id;
         public int user_kind;
         bool image_click = false;
+        private string APIKEY = "AIzaSyCb9_Q9RXAwaDni9Uq0hgVcFPSJeMwoLek";
+        private double lenght, latitude;
+
 
         public wfDashBoard()
         {
@@ -77,17 +83,20 @@ namespace operator_morena
 
         private void wfDashBoard_Load(object sender, EventArgs e)
         {
-            //gMapControl1.DragButton = MouseButtons.Left;
-            //gMapControl1.CanDragMap = true;
-            //gMapControl1.MapProvider = GMapProviders.GoogleMap;
-            //gMapControl1.Position = new PointLatLng(LatIncial, LngIncial);
-            //gMapControl1.MinZoom = 0;
-            //gMapControl1.MaxZoom = 24;
-            //gMapControl1.Zoom = 9;
-            //gMapControl1.AutoScroll = true;
+            //MAPA
+            gMapControl1.DragButton = MouseButtons.Left;
+            gMapControl1.CanDragMap = true;
+            gMapControl1.MapProvider = GMapProviders.GoogleMap;
+            gMapControl1.Position = new PointLatLng(LatIncial, LngIncial);
+            gMapControl1.MinZoom = 0;
+            gMapControl1.MaxZoom = 24;
+            gMapControl1.Zoom = 20;
+            gMapControl1.AutoScroll = true;
+
+            GoogleSigned.AssignAllServices(new GoogleSigned(APIKEY));
 
             //DEPENDIENDO EL TIPO DE USUARIO MOSTRAMOS LOS BOTONES CORRESPONDIENTES
-            if(user_kind == 1)
+            if (user_kind == 1)
             {
                 tsbtnNuevo.Visible = true;
             }
@@ -105,19 +114,18 @@ namespace operator_morena
         }
 
         #region FUNCIONES
-        private int check_score()
+        private void set_map_point(double Latitude, double Longitude)
         {
-            if (chb1.Checked)
-                return 1;
-            if (chb2.Checked)
-                return 2;
-            if (chb3.Checked)
-                return 3;
-            if (chb4.Checked)
-                return 4;
-            if (chb5.Checked)
-                return 5;
-            return 0;
+            PointLatLng point = new PointLatLng(Latitude, Longitude);
+            GMapMarker marker = new GMarkerGoogle(point, GMarkerGoogleType.red);
+
+            GMapOverlay markers = new GMapOverlay("markers");
+
+            markers.Markers.Add(marker);
+
+            gMapControl1.Position = point;
+            gMapControl1.Overlays.Clear();
+            gMapControl1.Overlays.Add(markers);
         }
 
         private byte[] ConvertImageToBinary(Image img)
@@ -217,16 +225,15 @@ namespace operator_morena
             rtbComents.Text = string.Empty;
             rtbMunicipality.Text = string.Empty;
 
+            rater1.CurrentRating = 0;
+            lbNPoblacion.Text = "";
+            lbNSecciones.Text = "";
+
             cbPopulation.Text = string.Empty;
             cbMunicipality.Text = string.Empty;
 
-            chb1.Checked = false;
-            chb2.Checked = false;
-            chb3.Checked = false;
-            chb4.Checked = false;
-            chb5.Checked = false;
-
             pbImagen.BackgroundImage = null;
+            gMapControl1.Overlays.Clear();
         }
 
         private void enable_disable_fields(bool option)
@@ -241,13 +248,10 @@ namespace operator_morena
 
             rtbComents.Enabled = option;
             rtbMunicipality.Enabled = option;
+            btnSearchAddress.Enabled = option;
 
-            chb1.Enabled = option;
-            chb2.Enabled = option;
-            chb3.Enabled = option;
-            chb4.Enabled = option;
-            chb5.Enabled = option;
-
+            rater1.Enabled = option;
+            gMapControl1.Enabled = option;
 
             cbSection.Enabled = option;
             cbPopulation.Enabled = option;
@@ -495,20 +499,22 @@ namespace operator_morena
             foreach (Operator item in operators)
             {
                 text = item.name
-                    + "," + item.last_name
-                    + "," + item.m_last_name
-                    + "," + item.alias 
-                    + "," + item.phone
-                    + "," + item.email
-                    + "," + item.address
-                    + "," + item.observation
-                    + "," + item.municipality
-                    + "," + item.score
-                    + "," + item.status
-                    + "," + item.id_sections
-                    + "," + item.image
-                    + "," + item.id_operators_key
-                    + "," + item.operators_key
+                    + "|" + item.last_name
+                    + "|" + item.m_last_name
+                    + "|" + item.alias 
+                    + "|" + item.phone
+                    + "|" + item.email
+                    + "|" + item.address
+                    + "|" + item.observation
+                    + "|" + item.municipality
+                    + "|" + item.score
+                    + "|" + item.status
+                    + "|" + item.id_sections
+                    + "|" + item.image
+                    + "|" + item.id_operators_key
+                    + "|" + item.operators_key
+                    + "|" + item.latitude
+                    + "|" + item.length
                     + System.Environment.NewLine;
                 File.AppendAllText(saveFile.FileName, text);
             }
@@ -535,7 +541,7 @@ namespace operator_morena
                     while (!reader.EndOfStream)
                     {
                         var line = reader.ReadLine();
-                        var item = line.Split(',');
+                        var item = line.Split('|');
 
                         Operator operators = new Operator();
                         operators.name = Convert.ToString(item[0]);
@@ -553,6 +559,8 @@ namespace operator_morena
                         operators.image = Convert.ToString(item[12]);
                         operators.id_operators_key = Convert.ToString(item[13]);
                         operators.operators_key = Convert.ToString(item[14]);
+                        operators.latitude= Convert.ToString(item[15]);
+                        operators.length= Convert.ToString(item[16]);
 
                         db.Operators.Add(operators);
                         db.SaveChanges();
@@ -572,6 +580,8 @@ namespace operator_morena
             clean_fields();
             image_click = false;
             id = 0;
+            latitude = 0;
+            lenght = 0;
 
             //BOTONES
             tsbtDelete.Visible = false;
@@ -613,11 +623,13 @@ namespace operator_morena
             operators.address = tbAddress.Text;
             operators.observation = rtbComents.Text;
             operators.municipality = rtbMunicipality.Text;
-            operators.score = check_score();
+            operators.score = rater1.CurrentRating;
             operators.id_sections = sections.id;
             operators.status = 1;
             operators.image = ConvertImageToBase64(pbImagen.BackgroundImage);
             operators.operators_key = GetMD5(tbName.Text + "-" + tbLastName.Text + "-" + tbMLastName.Text + "-" + tbAlias.Text);
+            operators.latitude = Convert.ToString(latitude);
+            operators.length = Convert.ToString(lenght);
 
             db.Operators.Add(operators);
             db.SaveChanges();
@@ -667,9 +679,12 @@ namespace operator_morena
             operators.address = tbAddress.Text;
             operators.observation = rtbComents.Text;
             operators.municipality = rtbMunicipality.Text;
-            operators.score = check_score();
+            operators.score = rater1.CurrentRating;
             operators.id_sections = sections.id;
             operators.status = 1;
+            operators.length = Convert.ToString(lenght);
+            operators.latitude = Convert.ToString(latitude);
+
             if (image_click)
             {
                 operators.image = ConvertImageToBase64(pbImagen.BackgroundImage);
@@ -728,31 +743,19 @@ namespace operator_morena
             tbAddress.Text = @operator.address;
             rtbComents.Text = @operator.observation;
             rtbMunicipality.Text = @operator.municipality;
-
-            switch (@operator.score)
-            {
-                case 1:
-                    chb1.Checked = true;
-                    break;
-                case 2:
-                    chb2.Checked = true;
-                    break;
-                case 3:
-                    chb3.Checked = true;
-                    break;
-                case 4:
-                    chb4.Checked = true;
-                    break;
-                case 5:
-                    chb5.Checked = true;
-                    break;
-            }
+            rater1.CurrentRating = @operator.score;
 
             cbMunicipality.Text = section.town_name;
             cbSection.Text = section.section;            
             cbPopulation.Text = section.location_name;
 
-            if(s_operator != null)
+            latitude = Convert.ToDouble(@operator.latitude);
+            lenght = Convert.ToDouble(@operator.length);
+
+            gMapControl1.Position = new PointLatLng(latitude, lenght);
+            set_map_point(latitude, lenght);
+
+            if (s_operator != null)
             {
                 tbSOperador.Text = s_operator.name + " " + s_operator.last_name + " " + s_operator.m_last_name;
             }
@@ -760,6 +763,9 @@ namespace operator_morena
             {
                 tbSOperador.Text = string.Empty;
             }
+
+            lbNSecciones.Text = db.Sections.Where(x => x.town_name == cbMunicipality.Text).Select(x => x.section).Distinct().Count().ToString();
+            lbNPoblacion.Text = db.Sections.Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text). Select(x => x.location_name).Distinct().Count().ToString();
 
             if (user_kind == 1)
             {
@@ -795,8 +801,12 @@ namespace operator_morena
         #region COMBO BOX
         private void cbMunicipality_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ConnectionDB db = new ConnectionDB();
             cbSection.Text = string.Empty;
             cbPopulation.Text = string.Empty;
+
+            lbNSecciones.Text = db.Sections.Where(x => x.town_name == cbMunicipality.Text).Select(x => x.section).Distinct().Count().ToString();
+
         }
 
         private void cbSection_Click(object sender, EventArgs e)
@@ -810,7 +820,14 @@ namespace operator_morena
             foreach(string item in section)
             {
                 cbSection.Items.Add(item);
-            }
+            }         
+        }
+
+        private void cbSection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ConnectionDB db = new ConnectionDB();
+            lbNPoblacion.Text = db.Sections.Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text).
+                Select(x => x.location_name).Distinct().Count().ToString();
         }
 
         private void cbPopulation_Click(object sender, EventArgs e)
@@ -829,48 +846,6 @@ namespace operator_morena
 
         #endregion
 
-        #region CHECKBOX
-        private void chb1_CheckedChanged(object sender, EventArgs e)
-        {
-            chb2.Checked = false;
-            chb3.Checked = false;
-            chb4.Checked = false;
-            chb5.Checked = false;
-        }
-
-        private void chb2_CheckedChanged(object sender, EventArgs e)
-        {
-            chb1.Checked = false;
-            chb3.Checked = false;
-            chb4.Checked = false;
-            chb5.Checked = false;
-        }
-
-        private void chb3_CheckedChanged(object sender, EventArgs e)
-        {
-            chb1.Checked = false;
-            chb2.Checked = false;
-            chb4.Checked = false;
-            chb5.Checked = false;
-        }
-
-        private void chb4_CheckedChanged(object sender, EventArgs e)
-        {
-            chb1.Checked = false;
-            chb2.Checked = false;
-            chb3.Checked = false;
-            chb5.Checked = false;
-        }
-
-        private void chb5_CheckedChanged(object sender, EventArgs e)
-        {
-            chb1.Checked = false;
-            chb2.Checked = false;
-            chb3.Checked = false;
-            chb4.Checked = false;
-        }
-        #endregion
-
         private void tsbtnSubOperator_Click(object sender, EventArgs e)
         {
             ConnectionDB db = new ConnectionDB();
@@ -881,6 +856,64 @@ namespace operator_morena
             form.operators_key = operators_key;
             form.ShowDialog();
             form.BringToFront();
+        }
+
+        private async void btnSearchAddress_Click(object sender, EventArgs e)
+        {
+            var request = new GeocodingRequest();
+            request.Address = tbAddress.Text;
+
+            try
+            {
+                var response = await new GeocodingService().GetResponseAsync(request);
+
+                if (response.Status == ServiceResponseStatus.Ok)
+                {
+                    foreach (var item in response.Results)
+                    {
+                        set_map_point(item.Geometry.Location.Latitude, item.Geometry.Location.Longitude);
+                        latitude = item.Geometry.Location.Latitude;
+                        lenght = item.Geometry.Location.Longitude;
+                        break;
+                    }
+                }
+            }
+            catch
+            {
+                latitude = 0;
+                lenght = 0;
+                gMapControl1.Position = new PointLatLng(LatIncial, LngIncial);
+                gMapControl1.Overlays.Clear();
+            }
+           
+        }
+
+        private void gMapControl1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+                List<Placemark> placemarks = null;
+                var point = gMapControl1.FromLocalToLatLng(e.X, e.Y);
+                double lat = point.Lat;
+                double lng = point.Lng;
+                latitude = lat;
+                lenght = lng;
+
+                gMapControl1.Position = point;
+
+                GMapProviders.GoogleMap.ApiKey = APIKEY;
+                set_map_point(lat, lng);
+
+                var statusCode = GMapProviders.GoogleMap.GetPlacemarks(point, out placemarks);
+                if(statusCode == GeoCoderStatusCode.OK)
+                {
+                    foreach(var item in placemarks)
+                    {
+                        tbAddress.Text = item.Address;
+                        break;
+                    }
+                }
+            }
         }
     }
 }

@@ -24,5 +24,7 @@ namespace operator_morena.Models
         public int id_sections { get; set; }
         public string id_operators_key { get; set; }
         public string image { get; set; }
+        public string latitude { get; set; }
+        public string length { get; set; }
     }
 }

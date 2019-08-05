@@ -40,6 +40,7 @@
             this.tsbtnNuevo = new System.Windows.Forms.ToolStripButton();
             this.tsbtnExport = new System.Windows.Forms.ToolStripButton();
             this.tsbtnImport = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnSubOperator = new System.Windows.Forms.ToolStripButton();
             this.dgvOperator = new System.Windows.Forms.DataGridView();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -64,11 +65,6 @@
             this.tbEmail = new System.Windows.Forms.TextBox();
             this.tbPhone = new System.Windows.Forms.TextBox();
             this.rtbComents = new System.Windows.Forms.RichTextBox();
-            this.chb1 = new System.Windows.Forms.CheckBox();
-            this.chb2 = new System.Windows.Forms.CheckBox();
-            this.chb3 = new System.Windows.Forms.CheckBox();
-            this.chb4 = new System.Windows.Forms.CheckBox();
-            this.chb5 = new System.Windows.Forms.CheckBox();
             this.cbSection = new System.Windows.Forms.ComboBox();
             this.cbMunicipality = new System.Windows.Forms.ComboBox();
             this.cbPopulation = new System.Windows.Forms.ComboBox();
@@ -82,10 +78,17 @@
             this.tbAddress = new System.Windows.Forms.TextBox();
             this.materialLabel14 = new MaterialSkin.Controls.MaterialLabel();
             this.tbSOperador = new System.Windows.Forms.TextBox();
-            this.tsbtnSubOperator = new System.Windows.Forms.ToolStripButton();
+            this.rater1 = new ShaperRater.Rater();
+            this.gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
+            this.materialLabel15 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel16 = new MaterialSkin.Controls.MaterialLabel();
+            this.btnSearchAddress = new System.Windows.Forms.Button();
+            this.lbNSecciones = new MaterialSkin.Controls.MaterialLabel();
+            this.lbNPoblacion = new MaterialSkin.Controls.MaterialLabel();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOperator)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbImagen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rater1)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -108,7 +111,7 @@
             this.tsbtnSubOperator});
             this.toolStrip1.Location = new System.Drawing.Point(9, 65);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1054, 34);
+            this.toolStrip1.Size = new System.Drawing.Size(1088, 34);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -214,6 +217,16 @@
             this.tsbtnImport.Text = "Importar";
             this.tsbtnImport.Click += new System.EventHandler(this.tsbtnImport_Click);
             // 
+            // tsbtnSubOperator
+            // 
+            this.tsbtnSubOperator.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnSubOperator.Image")));
+            this.tsbtnSubOperator.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnSubOperator.Name = "tsbtnSubOperator";
+            this.tsbtnSubOperator.Size = new System.Drawing.Size(100, 31);
+            this.tsbtnSubOperator.Text = "Sub-operador";
+            this.tsbtnSubOperator.Visible = false;
+            this.tsbtnSubOperator.Click += new System.EventHandler(this.tsbtnSubOperator_Click);
+            // 
             // dgvOperator
             // 
             this.dgvOperator.AllowUserToAddRows = false;
@@ -235,7 +248,7 @@
             this.dgvOperator.Location = new System.Drawing.Point(9, 113);
             this.dgvOperator.Name = "dgvOperator";
             this.dgvOperator.ReadOnly = true;
-            this.dgvOperator.Size = new System.Drawing.Size(503, 613);
+            this.dgvOperator.Size = new System.Drawing.Size(503, 663);
             this.dgvOperator.TabIndex = 18;
             this.dgvOperator.DoubleClick += new System.EventHandler(this.dgvOperator_DoubleClick);
             // 
@@ -296,9 +309,9 @@
             this.pbImagen.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbImagen.Enabled = false;
             this.pbImagen.InitialImage = null;
-            this.pbImagen.Location = new System.Drawing.Point(527, 145);
+            this.pbImagen.Location = new System.Drawing.Point(530, 145);
             this.pbImagen.Name = "pbImagen";
-            this.pbImagen.Size = new System.Drawing.Size(144, 202);
+            this.pbImagen.Size = new System.Drawing.Size(144, 139);
             this.pbImagen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pbImagen.TabIndex = 2;
             this.pbImagen.TabStop = false;
@@ -312,7 +325,7 @@
             this.materialLabel1.Depth = 0;
             this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(672, 144);
+            this.materialLabel1.Location = new System.Drawing.Point(675, 144);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
             this.materialLabel1.Size = new System.Drawing.Size(67, 19);
@@ -327,7 +340,7 @@
             this.materialLabel2.Depth = 0;
             this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel2.Location = new System.Drawing.Point(672, 233);
+            this.materialLabel2.Location = new System.Drawing.Point(900, 145);
             this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel2.Name = "materialLabel2";
             this.materialLabel2.Size = new System.Drawing.Size(57, 19);
@@ -342,7 +355,7 @@
             this.materialLabel3.Depth = 0;
             this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel3.Location = new System.Drawing.Point(523, 641);
+            this.materialLabel3.Location = new System.Drawing.Point(900, 384);
             this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel3.Name = "materialLabel3";
             this.materialLabel3.Size = new System.Drawing.Size(67, 19);
@@ -357,7 +370,7 @@
             this.materialLabel4.Depth = 0;
             this.materialLabel4.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel4.Location = new System.Drawing.Point(523, 606);
+            this.materialLabel4.Location = new System.Drawing.Point(900, 329);
             this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel4.Name = "materialLabel4";
             this.materialLabel4.Size = new System.Drawing.Size(79, 19);
@@ -372,7 +385,7 @@
             this.materialLabel5.Depth = 0;
             this.materialLabel5.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel5.Location = new System.Drawing.Point(836, 641);
+            this.materialLabel5.Location = new System.Drawing.Point(902, 444);
             this.materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel5.Name = "materialLabel5";
             this.materialLabel5.Size = new System.Drawing.Size(80, 19);
@@ -383,18 +396,18 @@
             // 
             this.tbName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tbName.Enabled = false;
-            this.tbName.Location = new System.Drawing.Point(808, 144);
+            this.tbName.Location = new System.Drawing.Point(679, 166);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(252, 20);
+            this.tbName.Size = new System.Drawing.Size(191, 20);
             this.tbName.TabIndex = 0;
             // 
             // tbAlias
             // 
             this.tbAlias.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tbAlias.Enabled = false;
-            this.tbAlias.Location = new System.Drawing.Point(808, 234);
+            this.tbAlias.Location = new System.Drawing.Point(904, 166);
             this.tbAlias.Name = "tbAlias";
-            this.tbAlias.Size = new System.Drawing.Size(252, 20);
+            this.tbAlias.Size = new System.Drawing.Size(191, 20);
             this.tbAlias.TabIndex = 3;
             // 
             // materialLabel6
@@ -405,7 +418,7 @@
             this.materialLabel6.Depth = 0;
             this.materialLabel6.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel6.Location = new System.Drawing.Point(672, 262);
+            this.materialLabel6.Location = new System.Drawing.Point(900, 194);
             this.materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel6.Name = "materialLabel6";
             this.materialLabel6.Size = new System.Drawing.Size(59, 19);
@@ -420,7 +433,7 @@
             this.materialLabel7.Depth = 0;
             this.materialLabel7.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel7.Location = new System.Drawing.Point(672, 296);
+            this.materialLabel7.Location = new System.Drawing.Point(900, 242);
             this.materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel7.Name = "materialLabel7";
             this.materialLabel7.Size = new System.Drawing.Size(73, 19);
@@ -435,7 +448,7 @@
             this.materialLabel8.Depth = 0;
             this.materialLabel8.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel8.Location = new System.Drawing.Point(523, 365);
+            this.materialLabel8.Location = new System.Drawing.Point(526, 297);
             this.materialLabel8.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel8.Name = "materialLabel8";
             this.materialLabel8.Size = new System.Drawing.Size(93, 19);
@@ -450,7 +463,7 @@
             this.materialLabel9.Depth = 0;
             this.materialLabel9.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel9.Location = new System.Drawing.Point(523, 498);
+            this.materialLabel9.Location = new System.Drawing.Point(526, 412);
             this.materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel9.Name = "materialLabel9";
             this.materialLabel9.Size = new System.Drawing.Size(112, 19);
@@ -461,109 +474,40 @@
             // 
             this.tbEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tbEmail.Enabled = false;
-            this.tbEmail.Location = new System.Drawing.Point(808, 263);
+            this.tbEmail.Location = new System.Drawing.Point(904, 216);
             this.tbEmail.Name = "tbEmail";
-            this.tbEmail.Size = new System.Drawing.Size(252, 20);
+            this.tbEmail.Size = new System.Drawing.Size(191, 20);
             this.tbEmail.TabIndex = 4;
             // 
             // tbPhone
             // 
             this.tbPhone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tbPhone.Enabled = false;
-            this.tbPhone.Location = new System.Drawing.Point(808, 297);
+            this.tbPhone.Location = new System.Drawing.Point(904, 264);
             this.tbPhone.Name = "tbPhone";
-            this.tbPhone.Size = new System.Drawing.Size(252, 20);
+            this.tbPhone.Size = new System.Drawing.Size(191, 20);
             this.tbPhone.TabIndex = 5;
             // 
             // rtbComents
             // 
             this.rtbComents.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbComents.Enabled = false;
-            this.rtbComents.Location = new System.Drawing.Point(527, 520);
+            this.rtbComents.Location = new System.Drawing.Point(530, 434);
             this.rtbComents.Name = "rtbComents";
-            this.rtbComents.Size = new System.Drawing.Size(533, 58);
+            this.rtbComents.Size = new System.Drawing.Size(340, 58);
             this.rtbComents.TabIndex = 13;
             this.rtbComents.Text = "";
-            // 
-            // chb1
-            // 
-            this.chb1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chb1.AutoSize = true;
-            this.chb1.BackColor = System.Drawing.Color.Transparent;
-            this.chb1.Enabled = false;
-            this.chb1.Location = new System.Drawing.Point(622, 368);
-            this.chb1.Name = "chb1";
-            this.chb1.Size = new System.Drawing.Size(69, 17);
-            this.chb1.TabIndex = 7;
-            this.chb1.Text = "1 Estrella";
-            this.chb1.UseVisualStyleBackColor = false;
-            this.chb1.CheckedChanged += new System.EventHandler(this.chb1_CheckedChanged);
-            // 
-            // chb2
-            // 
-            this.chb2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chb2.AutoSize = true;
-            this.chb2.BackColor = System.Drawing.Color.Transparent;
-            this.chb2.Enabled = false;
-            this.chb2.Location = new System.Drawing.Point(697, 368);
-            this.chb2.Name = "chb2";
-            this.chb2.Size = new System.Drawing.Size(69, 17);
-            this.chb2.TabIndex = 8;
-            this.chb2.Text = "2 Estrella";
-            this.chb2.UseVisualStyleBackColor = false;
-            this.chb2.CheckedChanged += new System.EventHandler(this.chb2_CheckedChanged);
-            // 
-            // chb3
-            // 
-            this.chb3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chb3.AutoSize = true;
-            this.chb3.BackColor = System.Drawing.Color.Transparent;
-            this.chb3.Enabled = false;
-            this.chb3.Location = new System.Drawing.Point(772, 368);
-            this.chb3.Name = "chb3";
-            this.chb3.Size = new System.Drawing.Size(69, 17);
-            this.chb3.TabIndex = 9;
-            this.chb3.Text = "3 Estrella";
-            this.chb3.UseVisualStyleBackColor = false;
-            this.chb3.CheckedChanged += new System.EventHandler(this.chb3_CheckedChanged);
-            // 
-            // chb4
-            // 
-            this.chb4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chb4.AutoSize = true;
-            this.chb4.BackColor = System.Drawing.Color.Transparent;
-            this.chb4.Enabled = false;
-            this.chb4.Location = new System.Drawing.Point(847, 368);
-            this.chb4.Name = "chb4";
-            this.chb4.Size = new System.Drawing.Size(69, 17);
-            this.chb4.TabIndex = 10;
-            this.chb4.Text = "4 Estrella";
-            this.chb4.UseVisualStyleBackColor = false;
-            this.chb4.CheckedChanged += new System.EventHandler(this.chb4_CheckedChanged);
-            // 
-            // chb5
-            // 
-            this.chb5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chb5.AutoSize = true;
-            this.chb5.BackColor = System.Drawing.Color.Transparent;
-            this.chb5.Enabled = false;
-            this.chb5.Location = new System.Drawing.Point(922, 368);
-            this.chb5.Name = "chb5";
-            this.chb5.Size = new System.Drawing.Size(69, 17);
-            this.chb5.TabIndex = 11;
-            this.chb5.Text = "5 Estrella";
-            this.chb5.UseVisualStyleBackColor = false;
-            this.chb5.CheckedChanged += new System.EventHandler(this.chb5_CheckedChanged);
             // 
             // cbSection
             // 
             this.cbSection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbSection.Enabled = false;
             this.cbSection.FormattingEnabled = true;
-            this.cbSection.Location = new System.Drawing.Point(608, 639);
+            this.cbSection.Location = new System.Drawing.Point(904, 406);
             this.cbSection.Name = "cbSection";
-            this.cbSection.Size = new System.Drawing.Size(160, 21);
+            this.cbSection.Size = new System.Drawing.Size(191, 21);
             this.cbSection.TabIndex = 15;
+            this.cbSection.SelectedIndexChanged += new System.EventHandler(this.cbSection_SelectedIndexChanged);
             this.cbSection.Click += new System.EventHandler(this.cbSection_Click);
             // 
             // cbMunicipality
@@ -573,9 +517,9 @@
             this.cbMunicipality.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbMunicipality.Enabled = false;
             this.cbMunicipality.FormattingEnabled = true;
-            this.cbMunicipality.Location = new System.Drawing.Point(608, 606);
+            this.cbMunicipality.Location = new System.Drawing.Point(904, 351);
             this.cbMunicipality.Name = "cbMunicipality";
-            this.cbMunicipality.Size = new System.Drawing.Size(160, 21);
+            this.cbMunicipality.Size = new System.Drawing.Size(191, 21);
             this.cbMunicipality.TabIndex = 14;
             this.cbMunicipality.SelectedIndexChanged += new System.EventHandler(this.cbMunicipality_SelectedIndexChanged);
             // 
@@ -584,9 +528,9 @@
             this.cbPopulation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbPopulation.Enabled = false;
             this.cbPopulation.FormattingEnabled = true;
-            this.cbPopulation.Location = new System.Drawing.Point(924, 639);
+            this.cbPopulation.Location = new System.Drawing.Point(904, 466);
             this.cbPopulation.Name = "cbPopulation";
-            this.cbPopulation.Size = new System.Drawing.Size(136, 21);
+            this.cbPopulation.Size = new System.Drawing.Size(191, 21);
             this.cbPopulation.TabIndex = 17;
             this.cbPopulation.Click += new System.EventHandler(this.cbPopulation_Click);
             // 
@@ -594,9 +538,9 @@
             // 
             this.tbLastName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tbLastName.Enabled = false;
-            this.tbLastName.Location = new System.Drawing.Point(808, 174);
+            this.tbLastName.Location = new System.Drawing.Point(679, 216);
             this.tbLastName.Name = "tbLastName";
-            this.tbLastName.Size = new System.Drawing.Size(252, 20);
+            this.tbLastName.Size = new System.Drawing.Size(191, 20);
             this.tbLastName.TabIndex = 1;
             // 
             // materialLabel10
@@ -607,7 +551,7 @@
             this.materialLabel10.Depth = 0;
             this.materialLabel10.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel10.Location = new System.Drawing.Point(672, 173);
+            this.materialLabel10.Location = new System.Drawing.Point(675, 194);
             this.materialLabel10.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel10.Name = "materialLabel10";
             this.materialLabel10.Size = new System.Drawing.Size(124, 19);
@@ -622,7 +566,7 @@
             this.materialLabel11.Depth = 0;
             this.materialLabel11.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel11.Location = new System.Drawing.Point(672, 205);
+            this.materialLabel11.Location = new System.Drawing.Point(675, 242);
             this.materialLabel11.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel11.Name = "materialLabel11";
             this.materialLabel11.Size = new System.Drawing.Size(128, 19);
@@ -633,9 +577,9 @@
             // 
             this.tbMLastName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tbMLastName.Enabled = false;
-            this.tbMLastName.Location = new System.Drawing.Point(808, 205);
+            this.tbMLastName.Location = new System.Drawing.Point(679, 264);
             this.tbMLastName.Name = "tbMLastName";
-            this.tbMLastName.Size = new System.Drawing.Size(252, 20);
+            this.tbMLastName.Size = new System.Drawing.Size(191, 20);
             this.tbMLastName.TabIndex = 2;
             // 
             // materialLabel12
@@ -646,7 +590,7 @@
             this.materialLabel12.Depth = 0;
             this.materialLabel12.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel12.Location = new System.Drawing.Point(523, 403);
+            this.materialLabel12.Location = new System.Drawing.Point(526, 329);
             this.materialLabel12.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel12.Name = "materialLabel12";
             this.materialLabel12.Size = new System.Drawing.Size(87, 19);
@@ -657,9 +601,9 @@
             // 
             this.rtbMunicipality.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbMunicipality.Enabled = false;
-            this.rtbMunicipality.Location = new System.Drawing.Point(527, 425);
+            this.rtbMunicipality.Location = new System.Drawing.Point(530, 351);
             this.rtbMunicipality.Name = "rtbMunicipality";
-            this.rtbMunicipality.Size = new System.Drawing.Size(533, 58);
+            this.rtbMunicipality.Size = new System.Drawing.Size(340, 58);
             this.rtbMunicipality.TabIndex = 12;
             this.rtbMunicipality.Text = "";
             // 
@@ -671,7 +615,7 @@
             this.materialLabel13.Depth = 0;
             this.materialLabel13.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel13.Location = new System.Drawing.Point(672, 328);
+            this.materialLabel13.Location = new System.Drawing.Point(526, 513);
             this.materialLabel13.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel13.Name = "materialLabel13";
             this.materialLabel13.Size = new System.Drawing.Size(77, 19);
@@ -682,9 +626,9 @@
             // 
             this.tbAddress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tbAddress.Enabled = false;
-            this.tbAddress.Location = new System.Drawing.Point(808, 329);
+            this.tbAddress.Location = new System.Drawing.Point(530, 535);
             this.tbAddress.Name = "tbAddress";
-            this.tbAddress.Size = new System.Drawing.Size(252, 20);
+            this.tbAddress.Size = new System.Drawing.Size(338, 20);
             this.tbAddress.TabIndex = 6;
             // 
             // materialLabel14
@@ -695,7 +639,7 @@
             this.materialLabel14.Depth = 0;
             this.materialLabel14.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel14.Location = new System.Drawing.Point(523, 113);
+            this.materialLabel14.Location = new System.Drawing.Point(526, 113);
             this.materialLabel14.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel14.Name = "materialLabel14";
             this.materialLabel14.Size = new System.Drawing.Size(74, 19);
@@ -706,26 +650,151 @@
             // 
             this.tbSOperador.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tbSOperador.Enabled = false;
-            this.tbSOperador.Location = new System.Drawing.Point(603, 112);
+            this.tbSOperador.Location = new System.Drawing.Point(606, 112);
             this.tbSOperador.Name = "tbSOperador";
-            this.tbSOperador.Size = new System.Drawing.Size(457, 20);
+            this.tbSOperador.Size = new System.Drawing.Size(489, 20);
             this.tbSOperador.TabIndex = 40;
             // 
-            // tsbtnSubOperator
+            // rater1
             // 
-            this.tsbtnSubOperator.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnSubOperator.Image")));
-            this.tsbtnSubOperator.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbtnSubOperator.Name = "tsbtnSubOperator";
-            this.tsbtnSubOperator.Size = new System.Drawing.Size(100, 31);
-            this.tsbtnSubOperator.Text = "Sub-operador";
-            this.tsbtnSubOperator.Visible = false;
-            this.tsbtnSubOperator.Click += new System.EventHandler(this.tsbtnSubOperator_Click);
+            this.rater1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rater1.BackColor = System.Drawing.Color.Transparent;
+            this.rater1.CurrentRating = 0;
+            this.rater1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rater1.LabelAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rater1.LabelText = "RateLabel";
+            this.rater1.LabelTextItems = new string[] {
+        "Poor",
+        "Fair",
+        "Good",
+        "Better",
+        "Best"};
+            this.rater1.Location = new System.Drawing.Point(626, 291);
+            this.rater1.Margin = new System.Windows.Forms.Padding(4);
+            this.rater1.Name = "rater1";
+            this.rater1.RadiusInner = 0F;
+            this.rater1.RadiusOuter = 10F;
+            this.rater1.Size = new System.Drawing.Size(129, 30);
+            this.rater1.TabIndex = 41;
+            // 
+            // gMapControl1
+            // 
+            this.gMapControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gMapControl1.Bearing = 0F;
+            this.gMapControl1.CanDragMap = true;
+            this.gMapControl1.EmptyTileColor = System.Drawing.Color.Navy;
+            this.gMapControl1.GrayScaleMode = false;
+            this.gMapControl1.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            this.gMapControl1.LevelsKeepInMemmory = 5;
+            this.gMapControl1.Location = new System.Drawing.Point(530, 572);
+            this.gMapControl1.MarkersEnabled = true;
+            this.gMapControl1.MaxZoom = 2;
+            this.gMapControl1.MinZoom = 2;
+            this.gMapControl1.MouseWheelZoomEnabled = true;
+            this.gMapControl1.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+            this.gMapControl1.Name = "gMapControl1";
+            this.gMapControl1.NegativeMode = false;
+            this.gMapControl1.PolygonsEnabled = true;
+            this.gMapControl1.RetryLoadTile = 0;
+            this.gMapControl1.RoutesEnabled = true;
+            this.gMapControl1.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+            this.gMapControl1.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+            this.gMapControl1.ShowTileGridLines = false;
+            this.gMapControl1.Size = new System.Drawing.Size(340, 204);
+            this.gMapControl1.TabIndex = 42;
+            this.gMapControl1.Zoom = 0D;
+            this.gMapControl1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.gMapControl1_MouseClick);
+            // 
+            // materialLabel15
+            // 
+            this.materialLabel15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.materialLabel15.AutoSize = true;
+            this.materialLabel15.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel15.Depth = 0;
+            this.materialLabel15.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel15.Location = new System.Drawing.Point(900, 643);
+            this.materialLabel15.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel15.Name = "materialLabel15";
+            this.materialLabel15.Size = new System.Drawing.Size(111, 19);
+            this.materialLabel15.TabIndex = 43;
+            this.materialLabel15.Text = "No. Secciones:";
+            // 
+            // materialLabel16
+            // 
+            this.materialLabel16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.materialLabel16.AutoSize = true;
+            this.materialLabel16.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel16.Depth = 0;
+            this.materialLabel16.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel16.Location = new System.Drawing.Point(903, 678);
+            this.materialLabel16.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel16.Name = "materialLabel16";
+            this.materialLabel16.Size = new System.Drawing.Size(124, 19);
+            this.materialLabel16.TabIndex = 44;
+            this.materialLabel16.Text = "No. Poblaciones:";
+            // 
+            // btnSearchAddress
+            // 
+            this.btnSearchAddress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSearchAddress.BackColor = System.Drawing.Color.Transparent;
+            this.btnSearchAddress.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnSearchAddress.BackgroundImage")));
+            this.btnSearchAddress.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnSearchAddress.FlatAppearance.BorderSize = 0;
+            this.btnSearchAddress.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearchAddress.Location = new System.Drawing.Point(874, 532);
+            this.btnSearchAddress.Name = "btnSearchAddress";
+            this.btnSearchAddress.Size = new System.Drawing.Size(28, 23);
+            this.btnSearchAddress.TabIndex = 45;
+            this.btnSearchAddress.UseVisualStyleBackColor = false;
+            this.btnSearchAddress.Click += new System.EventHandler(this.btnSearchAddress_Click);
+            // 
+            // lbNSecciones
+            // 
+            this.lbNSecciones.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbNSecciones.AutoSize = true;
+            this.lbNSecciones.BackColor = System.Drawing.Color.Transparent;
+            this.lbNSecciones.Depth = 0;
+            this.lbNSecciones.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lbNSecciones.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lbNSecciones.Location = new System.Drawing.Point(1033, 643);
+            this.lbNSecciones.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lbNSecciones.Name = "lbNSecciones";
+            this.lbNSecciones.Size = new System.Drawing.Size(0, 19);
+            this.lbNSecciones.TabIndex = 46;
+            // 
+            // lbNPoblacion
+            // 
+            this.lbNPoblacion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbNPoblacion.AutoSize = true;
+            this.lbNPoblacion.BackColor = System.Drawing.Color.Transparent;
+            this.lbNPoblacion.Depth = 0;
+            this.lbNPoblacion.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lbNPoblacion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lbNPoblacion.Location = new System.Drawing.Point(1033, 678);
+            this.lbNPoblacion.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lbNPoblacion.Name = "lbNPoblacion";
+            this.lbNPoblacion.Size = new System.Drawing.Size(0, 19);
+            this.lbNPoblacion.TabIndex = 47;
             // 
             // wfDashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1072, 738);
+            this.ClientSize = new System.Drawing.Size(1106, 788);
+            this.Controls.Add(this.lbNPoblacion);
+            this.Controls.Add(this.lbNSecciones);
+            this.Controls.Add(this.btnSearchAddress);
+            this.Controls.Add(this.materialLabel16);
+            this.Controls.Add(this.materialLabel15);
+            this.Controls.Add(this.gMapControl1);
+            this.Controls.Add(this.rater1);
             this.Controls.Add(this.tbSOperador);
             this.Controls.Add(this.materialLabel14);
             this.Controls.Add(this.tbAddress);
@@ -739,11 +808,6 @@
             this.Controls.Add(this.cbPopulation);
             this.Controls.Add(this.cbMunicipality);
             this.Controls.Add(this.cbSection);
-            this.Controls.Add(this.chb5);
-            this.Controls.Add(this.chb4);
-            this.Controls.Add(this.chb3);
-            this.Controls.Add(this.chb2);
-            this.Controls.Add(this.chb1);
             this.Controls.Add(this.rtbComents);
             this.Controls.Add(this.tbPhone);
             this.Controls.Add(this.tbEmail);
@@ -770,6 +834,7 @@
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOperator)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbImagen)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rater1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -801,11 +866,6 @@
         private System.Windows.Forms.TextBox tbEmail;
         private System.Windows.Forms.TextBox tbPhone;
         private System.Windows.Forms.RichTextBox rtbComents;
-        private System.Windows.Forms.CheckBox chb1;
-        private System.Windows.Forms.CheckBox chb2;
-        private System.Windows.Forms.CheckBox chb3;
-        private System.Windows.Forms.CheckBox chb4;
-        private System.Windows.Forms.CheckBox chb5;
         private System.Windows.Forms.ComboBox cbSection;
         private System.Windows.Forms.ComboBox cbMunicipality;
         private System.Windows.Forms.ComboBox cbPopulation;
@@ -831,5 +891,12 @@
         private MaterialSkin.Controls.MaterialLabel materialLabel14;
         private System.Windows.Forms.TextBox tbSOperador;
         private System.Windows.Forms.ToolStripButton tsbtnSubOperator;
+        private ShaperRater.Rater rater1;
+        private GMap.NET.WindowsForms.GMapControl gMapControl1;
+        private MaterialSkin.Controls.MaterialLabel materialLabel15;
+        private MaterialSkin.Controls.MaterialLabel materialLabel16;
+        internal System.Windows.Forms.Button btnSearchAddress;
+        private MaterialSkin.Controls.MaterialLabel lbNSecciones;
+        private MaterialSkin.Controls.MaterialLabel lbNPoblacion;
     }
 }
