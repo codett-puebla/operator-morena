@@ -50,3 +50,5 @@ E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\Google.Maps.
 E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\ShaperRater.dll
 E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\ShaperRater.pdb
 E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\ShaperRater.xml
+E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\x64\SQLite.Interop.dll
+E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\x86\SQLite.Interop.dll
