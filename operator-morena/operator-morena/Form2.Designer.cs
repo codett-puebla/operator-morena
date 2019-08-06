@@ -85,6 +85,7 @@
             this.btnSearchAddress = new System.Windows.Forms.Button();
             this.lbNSecciones = new MaterialSkin.Controls.MaterialLabel();
             this.lbNPoblacion = new MaterialSkin.Controls.MaterialLabel();
+            this.geckoWebBrowser1 = new Gecko.GeckoWebBrowser();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOperator)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbImagen)).BeginInit();
@@ -231,8 +232,7 @@
             // 
             this.dgvOperator.AllowUserToAddRows = false;
             this.dgvOperator.AllowUserToDeleteRows = false;
-            this.dgvOperator.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.dgvOperator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvOperator.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvOperator.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -248,7 +248,7 @@
             this.dgvOperator.Location = new System.Drawing.Point(9, 113);
             this.dgvOperator.Name = "dgvOperator";
             this.dgvOperator.ReadOnly = true;
-            this.dgvOperator.Size = new System.Drawing.Size(503, 663);
+            this.dgvOperator.Size = new System.Drawing.Size(503, 333);
             this.dgvOperator.TabIndex = 18;
             this.dgvOperator.DoubleClick += new System.EventHandler(this.dgvOperator_DoubleClick);
             // 
@@ -783,11 +783,24 @@
             this.lbNPoblacion.Size = new System.Drawing.Size(0, 19);
             this.lbNPoblacion.TabIndex = 47;
             // 
+            // geckoWebBrowser1
+            // 
+            this.geckoWebBrowser1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.geckoWebBrowser1.FrameEventsPropagateToMainWindow = false;
+            this.geckoWebBrowser1.Location = new System.Drawing.Point(9, 452);
+            this.geckoWebBrowser1.Name = "geckoWebBrowser1";
+            this.geckoWebBrowser1.Size = new System.Drawing.Size(503, 324);
+            this.geckoWebBrowser1.TabIndex = 48;
+            this.geckoWebBrowser1.UseHttpActivityObserver = false;
+            // 
             // wfDashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1106, 788);
+            this.Controls.Add(this.geckoWebBrowser1);
             this.Controls.Add(this.lbNPoblacion);
             this.Controls.Add(this.lbNSecciones);
             this.Controls.Add(this.btnSearchAddress);
@@ -898,5 +911,6 @@
         internal System.Windows.Forms.Button btnSearchAddress;
         private MaterialSkin.Controls.MaterialLabel lbNSecciones;
         private MaterialSkin.Controls.MaterialLabel lbNPoblacion;
+        private Gecko.GeckoWebBrowser geckoWebBrowser1;
     }
 }

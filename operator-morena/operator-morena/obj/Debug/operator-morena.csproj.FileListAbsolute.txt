@@ -52,3 +52,7 @@ E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\ShaperRater.
 E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\ShaperRater.xml
 E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\x64\SQLite.Interop.dll
 E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\x86\SQLite.Interop.dll
+E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\Geckofx-Core.dll
+E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\Geckofx-Winforms.dll
+E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\Geckofx-Core.pdb
+E:\GitHub\operator-morena\operator-morena\operator-morena\bin\Debug\Geckofx-Winforms.pdb

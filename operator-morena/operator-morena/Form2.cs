@@ -21,6 +21,8 @@ using System.Security.Cryptography;
 using Google.Maps;
 using Google.Maps.Geocoding;
 using Placemark = GMap.NET.Placemark;
+using System.Net;
+using Gecko;
 
 namespace operator_morena
 {
@@ -33,11 +35,13 @@ namespace operator_morena
         bool image_click = false;
         private string APIKEY = "AIzaSyCb9_Q9RXAwaDni9Uq0hgVcFPSJeMwoLek";
         private double lenght, latitude;
+        private string url = "https://www.iee-puebla.org.mx/2016/CARTOGRAFIA%20LOCAL%20ABRIL%202016/PSI%20";
 
 
         public wfDashBoard()
         {
             InitializeComponent();
+            Xpcom.Initialize("Firefox");
 
             MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
@@ -83,6 +87,7 @@ namespace operator_morena
 
         private void wfDashBoard_Load(object sender, EventArgs e)
         {
+
             //MAPA
             gMapControl1.DragButton = MouseButtons.Left;
             gMapControl1.CanDragMap = true;
@@ -112,6 +117,7 @@ namespace operator_morena
             cbMunicipality.DataSource = sections;
             fill_dgv("");
         }
+
 
         #region FUNCIONES
         private void set_map_point(double Latitude, double Longitude)
@@ -826,8 +832,24 @@ namespace operator_morena
         private void cbSection_SelectedIndexChanged(object sender, EventArgs e)
         {
             ConnectionDB db = new ConnectionDB();
+            string district;
+            url = "https://www.iee-puebla.org.mx/2016/CARTOGRAFIA%20LOCAL%20ABRIL%202016/PSI%20";
+
             lbNPoblacion.Text = db.Sections.Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text).
                 Select(x => x.location_name).Distinct().Count().ToString();
+
+            var distrito_seccion = db.Sections.Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text).Select(x => new { x.district, x.section }).Distinct().FirstOrDefault();
+            if(Convert.ToInt32(distrito_seccion.district) < 9)
+            {
+                district = "0" + distrito_seccion.district;
+            }
+            else  
+            {
+                district = distrito_seccion.district; 
+            }
+
+            url = url + district + "/PSI21" + district + distrito_seccion.section + ".pdf";
+            geckoWebBrowser1.Navigate(url);
         }
 
         private void cbPopulation_Click(object sender, EventArgs e)
