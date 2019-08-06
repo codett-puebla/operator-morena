@@ -2,3 +2,4 @@
 # Este archivo .gitignore ha sido creado automáticamente por Microsoft(R) Visual Studio.
 ################################################################################
 /operator-morena/.vs/operator-morena/v15
+/operator-morena/operator-morena/bin/Debug/Files

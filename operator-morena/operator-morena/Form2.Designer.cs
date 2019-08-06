@@ -85,7 +85,7 @@
             this.btnSearchAddress = new System.Windows.Forms.Button();
             this.lbNSecciones = new MaterialSkin.Controls.MaterialLabel();
             this.lbNPoblacion = new MaterialSkin.Controls.MaterialLabel();
-            this.geckoWebBrowser1 = new Gecko.GeckoWebBrowser();
+            this.wbSecciones1 = new System.Windows.Forms.WebBrowser();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOperator)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbImagen)).BeginInit();
@@ -783,24 +783,23 @@
             this.lbNPoblacion.Size = new System.Drawing.Size(0, 19);
             this.lbNPoblacion.TabIndex = 47;
             // 
-            // geckoWebBrowser1
+            // wbSecciones1
             // 
-            this.geckoWebBrowser1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.wbSecciones1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.geckoWebBrowser1.FrameEventsPropagateToMainWindow = false;
-            this.geckoWebBrowser1.Location = new System.Drawing.Point(9, 452);
-            this.geckoWebBrowser1.Name = "geckoWebBrowser1";
-            this.geckoWebBrowser1.Size = new System.Drawing.Size(503, 324);
-            this.geckoWebBrowser1.TabIndex = 48;
-            this.geckoWebBrowser1.UseHttpActivityObserver = false;
+            this.wbSecciones1.Location = new System.Drawing.Point(9, 452);
+            this.wbSecciones1.MinimumSize = new System.Drawing.Size(20, 20);
+            this.wbSecciones1.Name = "wbSecciones1";
+            this.wbSecciones1.Size = new System.Drawing.Size(511, 324);
+            this.wbSecciones1.TabIndex = 48;
             // 
             // wfDashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1106, 788);
-            this.Controls.Add(this.geckoWebBrowser1);
+            this.Controls.Add(this.wbSecciones1);
             this.Controls.Add(this.lbNPoblacion);
             this.Controls.Add(this.lbNSecciones);
             this.Controls.Add(this.btnSearchAddress);
@@ -911,6 +910,6 @@
         internal System.Windows.Forms.Button btnSearchAddress;
         private MaterialSkin.Controls.MaterialLabel lbNSecciones;
         private MaterialSkin.Controls.MaterialLabel lbNPoblacion;
-        private Gecko.GeckoWebBrowser geckoWebBrowser1;
+        private System.Windows.Forms.WebBrowser wbSecciones1;
     }
 }

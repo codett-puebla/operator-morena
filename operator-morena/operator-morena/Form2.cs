@@ -22,7 +22,6 @@ using Google.Maps;
 using Google.Maps.Geocoding;
 using Placemark = GMap.NET.Placemark;
 using System.Net;
-using Gecko;
 
 namespace operator_morena
 {
@@ -35,13 +34,11 @@ namespace operator_morena
         bool image_click = false;
         private string APIKEY = "AIzaSyCb9_Q9RXAwaDni9Uq0hgVcFPSJeMwoLek";
         private double lenght, latitude;
-        private string url = "https://www.iee-puebla.org.mx/2016/CARTOGRAFIA%20LOCAL%20ABRIL%202016/PSI%20";
 
 
         public wfDashBoard()
         {
             InitializeComponent();
-            Xpcom.Initialize("Firefox");
 
             MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
@@ -120,6 +117,43 @@ namespace operator_morena
 
 
         #region FUNCIONES
+        private void web_browser_config(string district, string section)
+        {
+            string url = "https://www.iee-puebla.org.mx/2016/CARTOGRAFIA%20LOCAL%20ABRIL%202016/PSI%20";
+            if (Convert.ToInt32(district) < 9)
+            {
+                district = "0" + district;
+            }
+
+            url = url + district + "/PSI21" + district + section + ".pdf";
+
+            string path = AppDomain.CurrentDomain.BaseDirectory + "Files";
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            if (!File.Exists(path + @"\PSI21" + district + section + ".pdf"))
+            {
+                WebClient web = new WebClient();
+                try
+                {
+                    web.DownloadFile(url, path + @"\PSI21" + district + section + ".pdf");
+                    wbSecciones1.Navigate("file:///" + path + @"\PSI21" + district + section + ".pdf");
+                }
+                catch
+                {
+                    wbSecciones1.Navigate("about:blank");
+                }
+
+            }
+            else
+            {
+                wbSecciones1.Navigate("file:///" + path + @"\PSI21" + district + section + ".pdf");
+            }           
+        }
+
         private void set_map_point(double Latitude, double Longitude)
         {
             PointLatLng point = new PointLatLng(Latitude, Longitude);
@@ -237,8 +271,10 @@ namespace operator_morena
 
             cbPopulation.Text = string.Empty;
             cbMunicipality.Text = string.Empty;
+            cbSection.Text = string.Empty;
 
             pbImagen.BackgroundImage = null;
+            wbSecciones1.Navigate("about:blank");
             gMapControl1.Overlays.Clear();
         }
 
@@ -626,7 +662,7 @@ namespace operator_morena
             operators.alias = tbAlias.Text;
             operators.email = tbEmail.Text;
             operators.phone = tbPhone.Text;
-            operators.address = tbAddress.Text;
+            operators.address = Convert.ToString(tbAddress.Text).Replace(",","");
             operators.observation = rtbComents.Text;
             operators.municipality = rtbMunicipality.Text;
             operators.score = rater1.CurrentRating;
@@ -682,7 +718,7 @@ namespace operator_morena
             operators.alias = tbAlias.Text;
             operators.email = tbEmail.Text;
             operators.phone = tbPhone.Text;
-            operators.address = tbAddress.Text;
+            operators.address = Convert.ToString(tbAddress.Text).Replace(",", "");
             operators.observation = rtbComents.Text;
             operators.municipality = rtbMunicipality.Text;
             operators.score = rater1.CurrentRating;
@@ -772,6 +808,8 @@ namespace operator_morena
 
             lbNSecciones.Text = db.Sections.Where(x => x.town_name == cbMunicipality.Text).Select(x => x.section).Distinct().Count().ToString();
             lbNPoblacion.Text = db.Sections.Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text). Select(x => x.location_name).Distinct().Count().ToString();
+            var distrito_seccion = db.Sections.Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text).Select(x => new { x.district, x.section }).Distinct().FirstOrDefault();
+            web_browser_config(distrito_seccion.district, distrito_seccion.section);
 
             if (user_kind == 1)
             {
@@ -812,7 +850,7 @@ namespace operator_morena
             cbPopulation.Text = string.Empty;
 
             lbNSecciones.Text = db.Sections.Where(x => x.town_name == cbMunicipality.Text).Select(x => x.section).Distinct().Count().ToString();
-
+            lbNPoblacion.Text = "";
         }
 
         private void cbSection_Click(object sender, EventArgs e)
@@ -832,24 +870,16 @@ namespace operator_morena
         private void cbSection_SelectedIndexChanged(object sender, EventArgs e)
         {
             ConnectionDB db = new ConnectionDB();
-            string district;
-            url = "https://www.iee-puebla.org.mx/2016/CARTOGRAFIA%20LOCAL%20ABRIL%202016/PSI%20";
 
+            if (String.IsNullOrEmpty(cbSection.Text))
+            {
+                return;
+            }
             lbNPoblacion.Text = db.Sections.Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text).
                 Select(x => x.location_name).Distinct().Count().ToString();
 
             var distrito_seccion = db.Sections.Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text).Select(x => new { x.district, x.section }).Distinct().FirstOrDefault();
-            if(Convert.ToInt32(distrito_seccion.district) < 9)
-            {
-                district = "0" + distrito_seccion.district;
-            }
-            else  
-            {
-                district = distrito_seccion.district; 
-            }
-
-            url = url + district + "/PSI21" + district + distrito_seccion.section + ".pdf";
-            geckoWebBrowser1.Navigate(url);
+            web_browser_config(distrito_seccion.district, distrito_seccion.section);
         }
 
         private void cbPopulation_Click(object sender, EventArgs e)
