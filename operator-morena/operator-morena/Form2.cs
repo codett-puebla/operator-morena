@@ -1,46 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MaterialSkin;
-using MaterialSkin.Controls;
-using GMap.NET;
-using GMap.NET.WindowsForms.Markers;
-using GMap.NET.WindowsForms;
-using GMap.NET.MapProviders;
-using operator_morena.Connection;
-using operator_morena.Models;
+using System.Data.Entity;
 using System.Data.OleDb;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
+using System.Text;
+using System.Windows.Forms;
+using GMap.NET;
+using GMap.NET.MapProviders;
+using GMap.NET.WindowsForms;
+using GMap.NET.WindowsForms.Markers;
 using Google.Maps;
 using Google.Maps.Geocoding;
+using MaterialSkin;
+using MaterialSkin.Controls;
+using Microsoft.Office.Interop.Excel;
+using operator_morena.Connection;
+using operator_morena.Models;
+using Application = System.Windows.Forms.Application;
+using DataTable = System.Data.DataTable;
 using Placemark = GMap.NET.Placemark;
-using System.Net;
 
 namespace operator_morena
 {
     public partial class wfDashBoard : MaterialForm
     {
-        double LatIncial = 19.043719;
-        double LngIncial = -98.198911;
+        private readonly string APIKEY = "AIzaSyCb9_Q9RXAwaDni9Uq0hgVcFPSJeMwoLek";
         private int id;
-        public int user_kind;
-        bool image_click = false;
-        private string APIKEY = "AIzaSyCb9_Q9RXAwaDni9Uq0hgVcFPSJeMwoLek";
+        private bool image_click;
+        private readonly double LatIncial = 19.043719;
         private double lenght, latitude;
+        private readonly double LngIncial = -98.198911;
+        public int user_kind;
 
 
         public wfDashBoard()
         {
             InitializeComponent();
 
-            MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
+            var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
 
@@ -50,7 +53,6 @@ namespace operator_morena
                 Primary.Blue400,
                 Accent.LightBlue200,
                 TextShade.WHITE
-
             );
         }
 
@@ -63,13 +65,14 @@ namespace operator_morena
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             string image_name;
-            OpenFileDialog ofd = new OpenFileDialog {
+            var ofd = new OpenFileDialog
+            {
                 Filter = "Archivos de Imagen JPG|*.jpg|Todos los archivos|*.*",
                 FilterIndex = 1,
                 RestoreDirectory = true
             };
 
-            if(ofd.ShowDialog() == DialogResult.OK)
+            if (ofd.ShowDialog() == DialogResult.OK)
             {
                 image_name = ofd.FileName;
                 pbImagen.BackgroundImage = Image.FromFile(image_name);
@@ -79,12 +82,10 @@ namespace operator_morena
             {
                 pbImagen.BackgroundImage = null;
             }
-
         }
 
         private void wfDashBoard_Load(object sender, EventArgs e)
         {
-
             //MAPA
             gMapControl1.DragButton = MouseButtons.Left;
             gMapControl1.CanDragMap = true;
@@ -99,44 +100,100 @@ namespace operator_morena
 
             //DEPENDIENDO EL TIPO DE USUARIO MOSTRAMOS LOS BOTONES CORRESPONDIENTES
             if (user_kind == 1)
-            {
                 tsbtnNuevo.Visible = true;
-            }
             else
-            {
                 tsbtnNuevo.Visible = false;
-            }
 
-            ConnectionDB db = new ConnectionDB();
+            var db = new ConnectionDB();
 
-            List<string> sections = db.Sections.Select(x => x.town_name).Distinct().ToList();
+            var sections = db.Sections.Select(x => x.town_name).Distinct().ToList();
             cbMunicipality.Items.Clear();
             cbMunicipality.DataSource = sections;
             fill_dgv("");
         }
 
+        private void tsbtnSubOperator_Click(object sender, EventArgs e)
+        {
+            var db = new ConnectionDB();
+
+            var operators_key = db.Operators.Where(x => x.id == id).Select(x => x.operators_key).FirstOrDefault();
+
+            var form = new scrSubOperator();
+            form.operators_key = operators_key;
+            form.ShowDialog();
+            form.BringToFront();
+        }
+
+        private async void btnSearchAddress_Click(object sender, EventArgs e)
+        {
+            var request = new GeocodingRequest();
+            request.Address = tbAddress.Text;
+
+            try
+            {
+                var response = await new GeocodingService().GetResponseAsync(request);
+
+                if (response.Status == ServiceResponseStatus.Ok)
+                    foreach (var item in response.Results)
+                    {
+                        set_map_point(item.Geometry.Location.Latitude, item.Geometry.Location.Longitude);
+                        latitude = item.Geometry.Location.Latitude;
+                        lenght = item.Geometry.Location.Longitude;
+                        break;
+                    }
+            }
+            catch
+            {
+                latitude = 0;
+                lenght = 0;
+                gMapControl1.Position = new PointLatLng(LatIncial, LngIncial);
+                gMapControl1.Overlays.Clear();
+            }
+        }
+
+        private void gMapControl1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                List<Placemark> placemarks = null;
+                var point = gMapControl1.FromLocalToLatLng(e.X, e.Y);
+                var lat = point.Lat;
+                var lng = point.Lng;
+                latitude = lat;
+                lenght = lng;
+
+                gMapControl1.Position = point;
+
+                GMapProviders.GoogleMap.ApiKey = APIKEY;
+                set_map_point(lat, lng);
+
+                var statusCode = GMapProviders.GoogleMap.GetPlacemarks(point, out placemarks);
+                if (statusCode == GeoCoderStatusCode.OK)
+                    foreach (var item in placemarks)
+                    {
+                        tbAddress.Text = item.Address;
+                        break;
+                    }
+            }
+        }
+
 
         #region FUNCIONES
+
         private void web_browser_config(string district, string section)
         {
-            string url = "https://www.iee-puebla.org.mx/2016/CARTOGRAFIA%20LOCAL%20ABRIL%202016/PSI%20";
-            if (Convert.ToInt32(district) < 9)
-            {
-                district = "0" + district;
-            }
+            var url = "https://www.iee-puebla.org.mx/2016/CARTOGRAFIA%20LOCAL%20ABRIL%202016/PSI%20";
+            if (Convert.ToInt32(district) < 9) district = "0" + district;
 
             url = url + district + "/PSI21" + district + section + ".pdf";
 
-            string path = AppDomain.CurrentDomain.BaseDirectory + "Files";
+            var path = AppDomain.CurrentDomain.BaseDirectory + "Files";
 
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
             if (!File.Exists(path + @"\PSI21" + district + section + ".pdf"))
             {
-                WebClient web = new WebClient();
+                var web = new WebClient();
                 try
                 {
                     web.DownloadFile(url, path + @"\PSI21" + district + section + ".pdf");
@@ -146,20 +203,19 @@ namespace operator_morena
                 {
                     wbSecciones1.Navigate("about:blank");
                 }
-
             }
             else
             {
                 wbSecciones1.Navigate("file:///" + path + @"\PSI21" + district + section + ".pdf");
-            }           
+            }
         }
 
         private void set_map_point(double Latitude, double Longitude)
         {
-            PointLatLng point = new PointLatLng(Latitude, Longitude);
+            var point = new PointLatLng(Latitude, Longitude);
             GMapMarker marker = new GMarkerGoogle(point, GMarkerGoogleType.red);
 
-            GMapOverlay markers = new GMapOverlay("markers");
+            var markers = new GMapOverlay("markers");
 
             markers.Markers.Add(marker);
 
@@ -170,23 +226,21 @@ namespace operator_morena
 
         private byte[] ConvertImageToBinary(Image img)
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
                 if (img != null)
                 {
-                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    img.Save(ms, ImageFormat.Jpeg);
                     return ms.ToArray();
                 }
-                else
-                {
-                    return ms.ToArray();
-                }
+
+                return ms.ToArray();
             }
         }
 
         private Image ConvertBinaryToImage(byte[] data)
         {
-            using (MemoryStream ms = new MemoryStream(data))
+            using (var ms = new MemoryStream(data))
             {
                 try
                 {
@@ -196,43 +250,40 @@ namespace operator_morena
                 {
                     return null;
                 }
-
             }
         }
 
         private string ConvertImageToBase64(Image image)
         {
-            using (MemoryStream m = new MemoryStream())
+            using (var m = new MemoryStream())
             {
-                if(image != null)
+                if (image != null)
                 {
                     image.Save(m, image.RawFormat);
-                    byte[] imageBytes = m.ToArray();
+                    var imageBytes = m.ToArray();
 
                     // Convert byte[] to Base64 String
-                    string base64String = Convert.ToBase64String(imageBytes);
+                    var base64String = Convert.ToBase64String(imageBytes);
                     return base64String;
                 }
-                else
-                {
-                    return "";
-                }
+
+                return "";
             }
         }
 
         public Image ConvertBase64ToImage(string base64String)
         {
             // Convert base 64 string to byte[]
-            byte[] imageBytes = Convert.FromBase64String(base64String);
+            var imageBytes = Convert.FromBase64String(base64String);
             // Convert byte[] to Image
             using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
             {
                 try
                 {
-                    Image image = Image.FromStream(ms, true);
+                    var image = Image.FromStream(ms, true);
                     return image;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     return null;
                 }
@@ -241,12 +292,12 @@ namespace operator_morena
 
         public string GetMD5(string str)
         {
-            MD5 md5 = MD5CryptoServiceProvider.Create();
-            ASCIIEncoding encoding = new ASCIIEncoding();
+            var md5 = MD5.Create();
+            var encoding = new ASCIIEncoding();
             byte[] stream = null;
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             stream = md5.ComputeHash(encoding.GetBytes(str));
-            for (int i = 0; i < stream.Length; i++) sb.AppendFormat("{0:x2}", stream[i]);
+            for (var i = 0; i < stream.Length; i++) sb.AppendFormat("{0:x2}", stream[i]);
             return sb.ToString();
         }
 
@@ -305,7 +356,7 @@ namespace operator_morena
         private void fill_dgv(string search_value)
         {
             dgvOperator.Rows.Clear();
-            ConnectionDB db = new ConnectionDB();
+            var db = new ConnectionDB();
             var datos = db.Operators.Join(db.Sections, x => x.id_sections, y => y.id,
                 (x, y) => new
                 {
@@ -322,22 +373,19 @@ namespace operator_morena
             ).Where(x => x.status == 1);
 
             if (!string.IsNullOrEmpty(search_value))
-            {
-                datos = datos.Where(x=> x.name.Contains(search_value) || 
-                                        x.alias.Contains(search_value) || 
-                                        x.email.Contains(search_value) || 
-                                        x.phone.Contains(search_value) || 
-                                        x.section.Contains(search_value) ||
-                                        x.town_name.Contains(search_value) ||
-                                        x.location_name.Contains(search_value));
-            }
+                datos = datos.Where(x => x.name.Contains(search_value) ||
+                                         x.alias.Contains(search_value) ||
+                                         x.email.Contains(search_value) ||
+                                         x.phone.Contains(search_value) ||
+                                         x.section.Contains(search_value) ||
+                                         x.town_name.Contains(search_value) ||
+                                         x.location_name.Contains(search_value));
 
             var datos_f = datos.ToList();
 
             foreach (var item in datos_f)
-            {
-                dgvOperator.Rows.Add(item.id, item.name, item.alias, item.email, item.phone, item.section, item.town_name, item.location_name);
-            }
+                dgvOperator.Rows.Add(item.id, item.name, item.alias, item.email, item.phone, item.section,
+                    item.town_name, item.location_name);
         }
 
         private bool check_fields()
@@ -348,30 +396,35 @@ namespace operator_morena
                 tbName.Focus();
                 return false;
             }
+
             if (string.IsNullOrEmpty(tbAlias.Text))
             {
                 MessageBox.Show("Campo obligatorio", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tbName.Focus();
                 return false;
             }
+
             if (string.IsNullOrEmpty(tbPhone.Text))
             {
                 MessageBox.Show("Campo obligatorio", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tbPhone.Focus();
                 return false;
             }
+
             if (string.IsNullOrEmpty(cbSection.Text))
             {
                 MessageBox.Show("Campo obligatorio", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 cbSection.Focus();
                 return false;
             }
+
             if (string.IsNullOrEmpty(cbMunicipality.Text))
             {
                 MessageBox.Show("Campo obligatorio", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 cbMunicipality.Focus();
                 return false;
             }
+
             if (string.IsNullOrEmpty(cbPopulation.Text))
             {
                 MessageBox.Show("Campo obligatorio", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -397,32 +450,33 @@ namespace operator_morena
 
         private void excel_import()
         {
-            ConnectionDB db = new ConnectionDB();
+            var db = new ConnectionDB();
             OleDbConnection connection;
             OleDbDataAdapter dataAdapter;
-            DataTable dataTable = new DataTable();
-            DataSet dataSet = new DataSet();
-            OpenFileDialog ofd = new OpenFileDialog
+            var dataTable = new DataTable();
+            var dataSet = new DataSet();
+            var ofd = new OpenFileDialog
             {
                 Filter = "Excel 2007|*.xlsx",
                 Title = "Open file"
             };
 
-            if(ofd.ShowDialog() == DialogResult.OK)
+            if (ofd.ShowDialog() == DialogResult.OK)
             {
                 if (string.IsNullOrEmpty(ofd.FileName))
                     return;
-                connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + ofd.FileName + ";Extended Properties=Excel 12.0;");
+                connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + ofd.FileName +
+                                                 ";Extended Properties=Excel 12.0;");
 
                 try
                 {
-                    dataAdapter = new OleDbDataAdapter("SELECT * FROM [Hoja2$]",connection);
+                    dataAdapter = new OleDbDataAdapter("SELECT * FROM [Hoja2$]", connection);
                     connection.Open();
                     dataAdapter.Fill(dataSet, "MyData");
                     dataTable = dataSet.Tables["MyData"];
-                    foreach(DataRow item in dataTable.Rows)
+                    foreach (DataRow item in dataTable.Rows)
                     {
-                        Operator operators = new Operator();
+                        var operators = new Operator();
                         operators.name = Convert.ToString(item[0]);
                         operators.alias = Convert.ToString(item[1]);
                         operators.phone = Convert.ToString(item[2]);
@@ -440,25 +494,23 @@ namespace operator_morena
                     MessageBox.Show("Proceso terminado", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     fill_dgv("");
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-
                 }
             }
         }
 
         private void excel_export()
         {
-            DialogResult result = MessageBox.Show("¿Esta seguro que desea exportar sus datos de operador?", "Operador", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+            var result = MessageBox.Show("¿Esta seguro que desea exportar sus datos de operador?", "Operador",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
 
-            if (result != DialogResult.Yes)
+            if (result != DialogResult.Yes) return;
+
+            var i = 2;
+            var db = new ConnectionDB();
+            var saveFile = new SaveFileDialog
             {
-                return;
-            }
-
-            int i = 2;
-            ConnectionDB db = new ConnectionDB();
-            SaveFileDialog saveFile = new SaveFileDialog {
                 Title = "Guardar como",
                 Filter = "Excel |*.xlsx"
             };
@@ -470,14 +522,14 @@ namespace operator_morena
                 return;
             }
 
-            Microsoft.Office.Interop.Excel.Application application = new Microsoft.Office.Interop.Excel.Application();
-            Microsoft.Office.Interop.Excel.Workbook workbook;
-            Microsoft.Office.Interop.Excel.Worksheet worksheet;
+            var application = new Microsoft.Office.Interop.Excel.Application();
+            Workbook workbook;
+            Worksheet worksheet;
 
             workbook = application.Workbooks.Add();
             worksheet = workbook.Worksheets.Add();
 
-            List<Operator> operators = db.Operators.Where(x => x.status == 1).ToList();
+            var operators = db.Operators.Where(x => x.status == 1).ToList();
 
             worksheet.Cells.Item[1, 1] = "Nombre";
             worksheet.Cells.Item[1, 2] = "Alias";
@@ -489,7 +541,7 @@ namespace operator_morena
             worksheet.Cells.Item[1, 8] = "id_secciones";
             worksheet.Cells.Item[1, 9] = "imagen";
 
-            foreach(Operator item in operators)
+            foreach (var item in operators)
             {
                 worksheet.Cells.Item[i, 1] = item.name;
                 worksheet.Cells.Item[i, 2] = item.alias;
@@ -514,16 +566,14 @@ namespace operator_morena
 
         private void csv_export()
         {
-            DialogResult result = MessageBox.Show("¿Esta seguro que desea exportar sus datos de operador?", "Operador", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+            var result = MessageBox.Show("¿Esta seguro que desea exportar sus datos de operador?", "Operador",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
 
-            if (result != DialogResult.Yes)
-            {
-                return;
-            }
+            if (result != DialogResult.Yes) return;
 
             string text;
-            ConnectionDB db = new ConnectionDB();
-            SaveFileDialog saveFile = new SaveFileDialog
+            var db = new ConnectionDB();
+            var saveFile = new SaveFileDialog
             {
                 Title = "Guardar como",
                 Filter = "CSV Files (*.csv)|*.csv"
@@ -536,28 +586,28 @@ namespace operator_morena
                 return;
             }
 
-            List<Operator> operators = db.Operators.Where(x => x.status == 1).ToList();
+            var operators = db.Operators.Where(x => x.status == 1).ToList();
 
-            foreach (Operator item in operators)
+            foreach (var item in operators)
             {
                 text = item.name
-                    + "|" + item.last_name
-                    + "|" + item.m_last_name
-                    + "|" + item.alias 
-                    + "|" + item.phone
-                    + "|" + item.email
-                    + "|" + item.address
-                    + "|" + item.observation
-                    + "|" + item.municipality
-                    + "|" + item.score
-                    + "|" + item.status
-                    + "|" + item.id_sections
-                    + "|" + item.image
-                    + "|" + item.id_operators_key
-                    + "|" + item.operators_key
-                    + "|" + item.latitude
-                    + "|" + item.length
-                    + System.Environment.NewLine;
+                       + "|" + item.last_name
+                       + "|" + item.m_last_name
+                       + "|" + item.alias
+                       + "|" + item.phone
+                       + "|" + item.email
+                       + "|" + item.address
+                       + "|" + item.observation
+                       + "|" + item.municipality
+                       + "|" + item.score
+                       + "|" + item.status
+                       + "|" + item.id_sections
+                       + "|" + item.image
+                       + "|" + item.id_operators_key
+                       + "|" + item.operators_key
+                       + "|" + item.latitude
+                       + "|" + item.length
+                       + Environment.NewLine;
                 File.AppendAllText(saveFile.FileName, text);
             }
 
@@ -566,8 +616,8 @@ namespace operator_morena
 
         private void csv_import()
         {
-            ConnectionDB db = new ConnectionDB();
-            OpenFileDialog ofd = new OpenFileDialog
+            var db = new ConnectionDB();
+            var ofd = new OpenFileDialog
             {
                 Filter = "CSV Files (*.csv)|*.csv",
                 Title = "Open file"
@@ -585,7 +635,7 @@ namespace operator_morena
                         var line = reader.ReadLine();
                         var item = line.Split('|');
 
-                        Operator operators = new Operator();
+                        var operators = new Operator();
                         operators.name = Convert.ToString(item[0]);
                         operators.last_name = Convert.ToString(item[1]);
                         operators.m_last_name = Convert.ToString(item[2]);
@@ -601,8 +651,8 @@ namespace operator_morena
                         operators.image = Convert.ToString(item[12]);
                         operators.id_operators_key = Convert.ToString(item[13]);
                         operators.operators_key = Convert.ToString(item[14]);
-                        operators.latitude= Convert.ToString(item[15]);
-                        operators.length= Convert.ToString(item[16]);
+                        operators.latitude = Convert.ToString(item[15]);
+                        operators.length = Convert.ToString(item[16]);
 
                         db.Operators.Add(operators);
                         db.SaveChanges();
@@ -613,9 +663,11 @@ namespace operator_morena
             MessageBox.Show("Proceso terminado", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Information);
             fill_dgv("");
         }
+
         #endregion
 
         #region BOTONES
+
         private void tsbtnNuevo_Click(object sender, EventArgs e)
         {
             enable_disable_fields(true);
@@ -645,42 +697,43 @@ namespace operator_morena
 
         private void tsbtnGuarda_Click(object sender, EventArgs e)
         {
-            if (!check_fields())
-            {
-                return;
-            }
+            if (!check_fields()) return;
 
-            ConnectionDB db = new ConnectionDB();
+            var db = new ConnectionDB();
 
-            Section sections = db.Sections.Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text && x.location_name == cbPopulation.Text)
-                            .FirstOrDefault();
+            var sections = db.Sections.Where(x =>
+                    x.section == cbSection.Text && x.town_name == cbMunicipality.Text &&
+                    x.location_name == cbPopulation.Text)
+                .FirstOrDefault();
 
-            Operator operators = new Operator();
+            var operators = new Operator();
             operators.name = tbName.Text;
             operators.last_name = tbLastName.Text;
             operators.m_last_name = tbMLastName.Text;
             operators.alias = tbAlias.Text;
             operators.email = tbEmail.Text;
             operators.phone = tbPhone.Text;
-            operators.address = Convert.ToString(tbAddress.Text).Replace(",","");
+            operators.address = Convert.ToString(tbAddress.Text).Replace(",", "");
             operators.observation = rtbComents.Text;
             operators.municipality = rtbMunicipality.Text;
             operators.score = rater1.CurrentRating;
             operators.id_sections = sections.id;
             operators.status = 1;
             operators.image = ConvertImageToBase64(pbImagen.BackgroundImage);
-            operators.operators_key = GetMD5(tbName.Text + "-" + tbLastName.Text + "-" + tbMLastName.Text + "-" + tbAlias.Text);
+            operators.operators_key =
+                GetMD5(tbName.Text + "-" + tbLastName.Text + "-" + tbMLastName.Text + "-" + tbAlias.Text);
             operators.latitude = Convert.ToString(latitude);
             operators.length = Convert.ToString(lenght);
 
             db.Operators.Add(operators);
             db.SaveChanges();
 
-            MessageBox.Show("Registro realizado con éxito", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Registro realizado con éxito", "Operador", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
             clean_fields();
             enable_disable_fields(false);
             new_buttons();
-            fill_dgv("");            
+            fill_dgv("");
         }
 
         private void tsbtnEdita_Click(object sender, EventArgs e)
@@ -701,16 +754,15 @@ namespace operator_morena
 
         private void tsbtnSaveEdit_Click(object sender, EventArgs e)
         {
-            ConnectionDB db = new ConnectionDB();
+            var db = new ConnectionDB();
 
-            if (!check_fields())
-            {
-                return;
-            }
+            if (!check_fields()) return;
 
-            Operator operators = db.Operators.Where(x => x.id == id).FirstOrDefault();
-            Section sections = db.Sections.Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text && x.location_name == cbPopulation.Text)
-                            .FirstOrDefault();
+            var operators = db.Operators.Where(x => x.id == id).FirstOrDefault();
+            var sections = db.Sections.Where(x =>
+                    x.section == cbSection.Text && x.town_name == cbMunicipality.Text &&
+                    x.location_name == cbPopulation.Text)
+                .FirstOrDefault();
 
             operators.name = tbName.Text;
             operators.last_name = tbLastName.Text;
@@ -727,14 +779,12 @@ namespace operator_morena
             operators.length = Convert.ToString(lenght);
             operators.latitude = Convert.ToString(latitude);
 
-            if (image_click)
-            {
-                operators.image = ConvertImageToBase64(pbImagen.BackgroundImage);
-            }
-            db.Entry(operators).State = System.Data.Entity.EntityState.Modified;
+            if (image_click) operators.image = ConvertImageToBase64(pbImagen.BackgroundImage);
+            db.Entry(operators).State = EntityState.Modified;
             db.SaveChanges();
 
-            MessageBox.Show("Registro actualizado con éxito", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Registro actualizado con éxito", "Operador", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
             clean_fields();
             enable_disable_fields(false);
             new_buttons();
@@ -743,17 +793,19 @@ namespace operator_morena
 
         private void tsbtDelete_Click_1(object sender, EventArgs e)
         {
-            ConnectionDB db = new ConnectionDB();
-            DialogResult result = MessageBox.Show("¿Esta seguro que desea eliminar este registro?", "Operador", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+            var db = new ConnectionDB();
+            var result = MessageBox.Show("¿Esta seguro que desea eliminar este registro?", "Operador",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
 
             if (result == DialogResult.Yes)
             {
-                Operator operators = db.Operators.Where(x => x.id == id).FirstOrDefault();
+                var operators = db.Operators.Where(x => x.id == id).FirstOrDefault();
                 operators.status = 0;
-                db.Entry(operators).State = System.Data.Entity.EntityState.Modified;
+                db.Entry(operators).State = EntityState.Modified;
                 db.SaveChanges();
 
-                MessageBox.Show("Registro eliminado con éxito", "Operador", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Registro eliminado con éxito", "Operador", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
                 clean_fields();
                 enable_disable_fields(false);
                 new_buttons();
@@ -766,14 +818,14 @@ namespace operator_morena
             if (dgvOperator.Rows.Count == 0)
                 return;
 
-            ConnectionDB db = new ConnectionDB();
-            int index = dgvOperator.CurrentRow.Index;
+            var db = new ConnectionDB();
+            var index = dgvOperator.CurrentRow.Index;
             id = Convert.ToInt16(dgvOperator.Rows[index].Cells[0].Value.ToString());
 
-            Operator @operator = db.Operators.Where(x => x.id == id).FirstOrDefault();
-            Operator s_operator = db.Operators.Where(x => x.operators_key == @operator.id_operators_key).FirstOrDefault();
+            var @operator = db.Operators.Where(x => x.id == id).FirstOrDefault();
+            var s_operator = db.Operators.Where(x => x.operators_key == @operator.id_operators_key).FirstOrDefault();
 
-            Section section = db.Sections.Where(x => x.id == @operator.id_sections).FirstOrDefault();
+            var section = db.Sections.Where(x => x.id == @operator.id_sections).FirstOrDefault();
 
             pbImagen.BackgroundImage = ConvertBase64ToImage(@operator.image);
             tbName.Text = @operator.name;
@@ -788,7 +840,7 @@ namespace operator_morena
             rater1.CurrentRating = @operator.score;
 
             cbMunicipality.Text = section.town_name;
-            cbSection.Text = section.section;            
+            cbSection.Text = section.section;
             cbPopulation.Text = section.location_name;
 
             latitude = Convert.ToDouble(@operator.latitude);
@@ -798,17 +850,18 @@ namespace operator_morena
             set_map_point(latitude, lenght);
 
             if (s_operator != null)
-            {
                 tbSOperador.Text = s_operator.name + " " + s_operator.last_name + " " + s_operator.m_last_name;
-            }
             else
-            {
                 tbSOperador.Text = string.Empty;
-            }
 
-            lbNSecciones.Text = db.Sections.Where(x => x.town_name == cbMunicipality.Text).Select(x => x.section).Distinct().Count().ToString();
-            lbNPoblacion.Text = db.Sections.Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text). Select(x => x.location_name).Distinct().Count().ToString();
-            var distrito_seccion = db.Sections.Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text).Select(x => new { x.district, x.section }).Distinct().FirstOrDefault();
+            lbNSecciones.Text = db.Sections.Where(x => x.town_name == cbMunicipality.Text).Select(x => x.section)
+                .Distinct().Count().ToString();
+            lbNPoblacion.Text = db.Sections
+                .Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text)
+                .Select(x => x.location_name).Distinct().Count().ToString();
+            var distrito_seccion = db.Sections
+                .Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text)
+                .Select(x => new {x.district, x.section}).Distinct().FirstOrDefault();
             web_browser_config(distrito_seccion.district, distrito_seccion.section);
 
             if (user_kind == 1)
@@ -823,7 +876,6 @@ namespace operator_morena
                 tsbtnGuarda.Visible = false;
                 tsbtnCancela.Visible = false;
             }
-
         }
 
         private void tsbtnImport_Click(object sender, EventArgs e)
@@ -840,132 +892,60 @@ namespace operator_morena
         {
             fill_dgv(tsbtnSearch.Text);
         }
+
         #endregion
 
         #region COMBO BOX
+
         private void cbMunicipality_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ConnectionDB db = new ConnectionDB();
+            var db = new ConnectionDB();
             cbSection.Text = string.Empty;
             cbPopulation.Text = string.Empty;
 
-            lbNSecciones.Text = db.Sections.Where(x => x.town_name == cbMunicipality.Text).Select(x => x.section).Distinct().Count().ToString();
+            lbNSecciones.Text = db.Sections.Where(x => x.town_name == cbMunicipality.Text).Select(x => x.section)
+                .Distinct().Count().ToString();
             lbNPoblacion.Text = "";
         }
 
         private void cbSection_Click(object sender, EventArgs e)
         {
-            ConnectionDB db = new ConnectionDB();
+            var db = new ConnectionDB();
             cbSection.Items.Clear();
             cbPopulation.Items.Clear();
 
-            List<string> section = db.Sections.Where(x => x.town_name == cbMunicipality.Text).Select(x => x.section).Distinct().ToList();
+            var section = db.Sections.Where(x => x.town_name == cbMunicipality.Text).Select(x => x.section).Distinct()
+                .ToList();
 
-            foreach(string item in section)
-            {
-                cbSection.Items.Add(item);
-            }         
+            foreach (var item in section) cbSection.Items.Add(item);
         }
 
         private void cbSection_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ConnectionDB db = new ConnectionDB();
+            var db = new ConnectionDB();
 
-            if (String.IsNullOrEmpty(cbSection.Text))
-            {
-                return;
-            }
-            lbNPoblacion.Text = db.Sections.Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text).
-                Select(x => x.location_name).Distinct().Count().ToString();
+            if (string.IsNullOrEmpty(cbSection.Text)) return;
+            lbNPoblacion.Text = db.Sections
+                .Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text)
+                .Select(x => x.location_name).Distinct().Count().ToString();
 
-            var distrito_seccion = db.Sections.Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text).Select(x => new { x.district, x.section }).Distinct().FirstOrDefault();
+            var distrito_seccion = db.Sections
+                .Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text)
+                .Select(x => new {x.district, x.section}).Distinct().FirstOrDefault();
             web_browser_config(distrito_seccion.district, distrito_seccion.section);
         }
 
         private void cbPopulation_Click(object sender, EventArgs e)
         {
             cbPopulation.Items.Clear();
-            ConnectionDB db = new ConnectionDB();
+            var db = new ConnectionDB();
 
-            List<string> population = db.Sections.Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text).
-                Select(x => x.location_name).ToList();
+            var population = db.Sections.Where(x => x.section == cbSection.Text && x.town_name == cbMunicipality.Text)
+                .Select(x => x.location_name).ToList();
 
-            foreach (string item in population)
-            {
-                cbPopulation.Items.Add(item);
-            }
+            foreach (var item in population) cbPopulation.Items.Add(item);
         }
 
         #endregion
-
-        private void tsbtnSubOperator_Click(object sender, EventArgs e)
-        {
-            ConnectionDB db = new ConnectionDB();
-
-            string operators_key = db.Operators.Where(x => x.id == id).Select(x => x.operators_key).FirstOrDefault();
-
-            scrSubOperator form = new scrSubOperator();
-            form.operators_key = operators_key;
-            form.ShowDialog();
-            form.BringToFront();
-        }
-
-        private async void btnSearchAddress_Click(object sender, EventArgs e)
-        {
-            var request = new GeocodingRequest();
-            request.Address = tbAddress.Text;
-
-            try
-            {
-                var response = await new GeocodingService().GetResponseAsync(request);
-
-                if (response.Status == ServiceResponseStatus.Ok)
-                {
-                    foreach (var item in response.Results)
-                    {
-                        set_map_point(item.Geometry.Location.Latitude, item.Geometry.Location.Longitude);
-                        latitude = item.Geometry.Location.Latitude;
-                        lenght = item.Geometry.Location.Longitude;
-                        break;
-                    }
-                }
-            }
-            catch
-            {
-                latitude = 0;
-                lenght = 0;
-                gMapControl1.Position = new PointLatLng(LatIncial, LngIncial);
-                gMapControl1.Overlays.Clear();
-            }
-           
-        }
-
-        private void gMapControl1_MouseClick(object sender, MouseEventArgs e)
-        {
-            if(e.Button == MouseButtons.Right)
-            {
-                List<Placemark> placemarks = null;
-                var point = gMapControl1.FromLocalToLatLng(e.X, e.Y);
-                double lat = point.Lat;
-                double lng = point.Lng;
-                latitude = lat;
-                lenght = lng;
-
-                gMapControl1.Position = point;
-
-                GMapProviders.GoogleMap.ApiKey = APIKEY;
-                set_map_point(lat, lng);
-
-                var statusCode = GMapProviders.GoogleMap.GetPlacemarks(point, out placemarks);
-                if(statusCode == GeoCoderStatusCode.OK)
-                {
-                    foreach(var item in placemarks)
-                    {
-                        tbAddress.Text = item.Address;
-                        break;
-                    }
-                }
-            }
-        }
     }
 }

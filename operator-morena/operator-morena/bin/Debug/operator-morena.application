@@ -7,14 +7,14 @@
     <framework targetVersion="4.6.1" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="operator-morena.exe.manifest" size="23561">
+    <dependentAssembly dependencyType="install" codebase="operator-morena.exe.manifest" size="13892">
       <assemblyIdentity name="operator-morena.exe" version="1.0.0.22" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>VeUEKO/5YVYhMQUEc+51LBHt1PcBdzKCPHwwsMdjtCk=</dsig:DigestValue>
+        <dsig:DigestValue>PaVHs6nGjoTURHRD07ePeX7nUCrmxKd1d1c6rS1lOxo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

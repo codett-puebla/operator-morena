@@ -43,18 +43,6 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AjaxMin.dll" size="512000">
-      <assemblyIdentity name="AjaxMin" version="5.14.5506.26196" publicKeyToken="21EF50CE11B5D80F" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>7whuo6JtmgJhqJh9T0wPE3DxpbhS4GrGQAJwjTqBXfk=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EntityFramework.dll" size="5225168">
       <assemblyIdentity name="EntityFramework" version="6.0.0.0" publicKeyToken="B77A5C561934E089" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -75,30 +63,6 @@
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
         <dsig:DigestValue>4OEmw7inupUB0D+Z1Upcu9F0vOy2FwCYq0zBIZ8n+TM=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Geckofx-Core.dll" size="1959936">
-      <assemblyIdentity name="Geckofx-Core" version="45.0.34.0" publicKeyToken="3209AC31600D1857" language="neutral" processorArchitecture="x86" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>GIpTS/RG526jJvDtWqo6PTwJcAO5aHxUbiLgl7hMlvU=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Geckofx-Winforms.dll" size="136704">
-      <assemblyIdentity name="Geckofx-Winforms" version="45.0.34.0" publicKeyToken="3209AC31600D1857" language="neutral" processorArchitecture="x86" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>34l8IyjiWvdVjJMYAYe2RmXcAzKXkVQDr3hvV/FIf1I=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -182,7 +146,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>199dHik7Jx6yKTQZcQOPm40Fya6L5I1dqmFtBeKktAg=</dsig:DigestValue>
+        <dsig:DigestValue>2LJzz2gKhESKUokqdesK12WQTfafpLTzpjWFj3dDE+U=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -252,177 +216,6 @@
       <dsig:DigestValue>0afQ9RShH8bsbmFKVvjxwZGBOTidwXzPUtl4yWnM3ng=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Firefox\AccessibleMarshal.dll" size="12288">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>D9Lvej9dE2HPj74BwkiP8mAyllG90gyNi/oCCbnxG5Q=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Firefox\breakpadinjector.dll" size="102400">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>w7quWBjPsOlHicLKGQtEoKCl1+m5ie5AD9cqHLn6W1M=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Firefox\d3dcompiler_47.dll" size="3466856">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>7727zQ2VT4/cU0Z95dia1SXk5KnP/4oV0Hxv2zUMQH8=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Firefox\freebl3.dll" size="322560">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>AxNH6W3dW97IZs70zVqmZzKSm84Ak7kbK8QCjSBelN4=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Firefox\icudt58.dll" size="11160576">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>40lunW7DJtkbEKeHljDGNyRebAky1rTuxyoi4eFPqmc=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Firefox\icuin58.dll" size="1794048">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>iALyirS6tBMsO6ce9UBtUcL+EHmpCd/gGxJFGJ60a6M=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Firefox\icuuc58.dll" size="1252352">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>jbrWnMIeJYLV2C6dzuphMftXoX5bTFdN6NGrFfdC+ao=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Firefox\lgpllibs.dll" size="55808">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>4sEY5kDcNyDwldp+dR4Jb60a1lJQ6lxDIt4lu05rkYg=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Firefox\libEGL.dll" size="99840">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>gtG9jLyjx/WUeLr0Asd0HFbUSzKklZtsE1Zr63v/RRM=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Firefox\libGLESv2.dll" size="1201152">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>3VAYKhHTFoHTM1SGApuXA3JhDk5q6IJFznDJb30Ojko=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Firefox\mozglue.dll" size="93696">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>GrUSROqPd5mwgvs/oi8ri5WYtYD3yFZ9pQE8e0G8iZk=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Firefox\nss3.dll" size="1601024">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>xFVrpP0xTlO0paeKWMLlU1AcA4IFmrDmmnxZDiwUFZU=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Firefox\nssckbi.dll" size="408064">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>CMI67KNYNR5JGd53Yu39gkBxAKWWiqYqGJ0eOXakDts=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Firefox\nssdbm3.dll" size="85504">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>3Sdan19G+fZ7VLOYbGtlZ0JHsHhHMOC3DnjEZVCR3Bw=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Firefox\plugin-container.exe" size="276480">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>ueNuCXxXJ5U9Br+CVUPiRtmzRwVXkRPtdEsu0IooT0E=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Firefox\plugin-hang-ui.exe" size="165376">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>jY13qv82/t5v15HtVQ3xB6SqTtCkYV0Z5dAPdSrJA9I=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Firefox\sandboxbroker.dll" size="210432">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>nGdPo3NaWLyB0CClaaM5nszt2PGy3CGwLBmWor59eII=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Firefox\softokn3.dll" size="145408">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>JOn0i8ps7fMymK5bIir/HRceYtakCnJtUidnnYIt1sg=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Firefox\xul.dll" size="38457856">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>VHSzGv2nslZ11eGYemRP7p5v3oaM9bbcoe0IhBxFOwU=</dsig:DigestValue>
-    </hash>
-  </file>
   <file name="man.ico" size="15417">
     <hash>
       <dsig:Transforms>
@@ -432,13 +225,13 @@
       <dsig:DigestValue>x67BeHZxigFzdb+N+NnVM+r4ema3QUobXGLxHKDx0tA=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="operator-morena.exe.config" size="2669">
+  <file name="operator-morena.exe.config" size="2817">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>a4PKdswY/EKVsbNM3cxR2ZfX55oCRDlhQSwJ3YPma+o=</dsig:DigestValue>
+      <dsig:DigestValue>yYV39dmw7CGOXzeg8nOoj/EmL9IzzuQDQsvpkQ2IHvA=</dsig:DigestValue>
     </hash>
   </file>
   <file name="x64\SQLite.Interop.dll" size="1625088">
@@ -459,4 +252,4 @@
       <dsig:DigestValue>sdGDGV850DVzMSymsjKGmy0Gst2a+454lvYe7j7ociQ=</dsig:DigestValue>
     </hash>
   </file>
-<publisherIdentity name="CN=DESKTOP-5EQKCQB\Dylan" issuerKeyHash="1596062b1284303d252485a37dd64d0192f88698" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>C+2tQESsz+9UElpdqHR1rDy9+aYtBJoFROPfQVswrWc=</DigestValue></Reference></SignedInfo><SignatureValue>qxmj/bMuNhdmghEUpkndagc52xrpYWKwv4lS3fba7DrHopUDUVj6QbYNq6Gllkr/CsmCGYRq+a50IZDPQCVLk3mP/IAq8ov2E8kFeSs+l/uH4PzO3tsjT0RRVE/qXXF+08Hzd0osNJ11DZg0tgGRBn85S9V7A7paha5CRcOmtew=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>ycLp89eTrPhE9Xt1ObIvd3JpW2BEBBw+qM84rmXeEkIVTkm4jU73FVsZkKcrcGVCSS4w55C5s/ZA3gqt0X4SppHoiQ+wn8CRT8n6gUPe9tORatuUs+D0KSrdVVFEw57/ACUy/rWuTQ10nrmAVg1ez4e48JQkJnHl/qNT+hXALIU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="67ad305b41dfe344059a042da6f9bd3cac7574a85d5a1254efcfac4440aded0b" Description="" Url=""><as:assemblyIdentity name="operator-morena.exe" version="1.0.0.22" publicKeyToken="31d45e1e999c8d72" language="neutral" processorArchitecture="x86" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=DESKTOP-5EQKCQB\Dylan</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>R48vuqJEu+RaQRcty2AxURt43gCesnQ1KzrBgvCZj3Y=</DigestValue></Reference></SignedInfo><SignatureValue>fZqTtVJXaSi2N9njewBBFcGxHy8qkDqmUGkWbDMhQA4ehn66/CT2kXlYd/v3IqRHjFAcPphUdD1UKZLsdTKUeZbe1O8KUWjhC/v+xpF7syZ4PlmE2NVoUK9r3YQdpqWUW5z4UedfHlhbVbhtH93FhHfLb5JHxkPojE+DWyxwFts=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>ycLp89eTrPhE9Xt1ObIvd3JpW2BEBBw+qM84rmXeEkIVTkm4jU73FVsZkKcrcGVCSS4w55C5s/ZA3gqt0X4SppHoiQ+wn8CRT8n6gUPe9tORatuUs+D0KSrdVVFEw57/ACUy/rWuTQ10nrmAVg1ez4e48JQkJnHl/qNT+hXALIU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB7TCCAVagAwIBAgIQEJMgUHOrhq9J+E9dpstyZjANBgkqhkiG9w0BAQsFADA1MTMwMQYDVQQDHioARABFAFMASwBUAE8AUAAtADUARQBRAEsAQwBRAEIAXABEAHkAbABhAG4wHhcNMTkwNzI5MTUzNDEzWhcNMjAwNzI4MjEzNDEzWjA1MTMwMQYDVQQDHioARABFAFMASwBUAE8AUAAtADUARQBRAEsAQwBRAEIAXABEAHkAbABhAG4wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMnC6fPXk6z4RPV7dTmyL3dyaVtgRAQcPqjPOK5l3hJCFU5JuI1O9xVbGZCnK3BlQkkuMOeQubP2QN4KrdF+EqaR6IkPsJ/AkU/J+oFD3vbTkWrblLPg9Ckq3VVRRMOe/wAlMv61rk0NdJ65gFYNXs+HuPCUJCZx5f6jU/oVwCyFAgMBAAEwDQYJKoZIhvcNAQELBQADgYEAfsKtOm8xsBfOowie/GtEZjejji/wYCvuQSeAp50MqVZsOiMNnUPfAhTFbxL+U/C5nczGKUYkqOvhSxbG2UZb2/TVsiYNPMsaM+ljI9cD4+3T1gWtDUlXqQZcZp59MohrTdTxGGoqGEgmwhzYxRWpByCBd4BS7V5TZ9oirydAwAs=</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
+<publisherIdentity name="CN=DESKTOP-5EQKCQB\Dylan" issuerKeyHash="1596062b1284303d252485a37dd64d0192f88698" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>O8YCFix3MYNQsHZqzfEiOyFWuuJZRnTs+6MceCb7cwE=</DigestValue></Reference></SignedInfo><SignatureValue>O5uTg6rSVN6e/dXU9SXWf519e/NLxmjlcB89p0ALj5BBOGIqbgGL/PvmTLw2C/yrXzIuq4aUujgd/9FlDXqEaYIdux72UYvRMcT8Qp/WJ91tx2Ll1rUH4N7pHA76rqlszLoOSG8joYJYhft4nA4nqbU2+WYo7zeA437a0vbON8w=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>ycLp89eTrPhE9Xt1ObIvd3JpW2BEBBw+qM84rmXeEkIVTkm4jU73FVsZkKcrcGVCSS4w55C5s/ZA3gqt0X4SppHoiQ+wn8CRT8n6gUPe9tORatuUs+D0KSrdVVFEw57/ACUy/rWuTQ10nrmAVg1ez4e48JQkJnHl/qNT+hXALIU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="0173fb26781ca3fbec744659e2ba56213b22f1cd6a76b0508331772c1602c63b" Description="" Url=""><as:assemblyIdentity name="operator-morena.exe" version="1.0.0.22" publicKeyToken="31d45e1e999c8d72" language="neutral" processorArchitecture="x86" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=DESKTOP-5EQKCQB\Dylan</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>RQwzxlE5DKSDb1oTGyY5BNcn1tTcb0k7Nv8CZvmbi1A=</DigestValue></Reference></SignedInfo><SignatureValue>FCHkcrhadM8ONi/wnjmACnNKD8M8+exFZB+X9eg9+fteq9TOVb/wkzkeHlLCo4wGV4Lg8o080n1rAmTwsyAwPElHzo2T3m794JprlYshxMyP4ACUmnfaUyj+Rlzji+Bg1FseuEA9kCN+8xsSfBol5BK9l9WdnDj0tqIrgzJ7+F4=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>ycLp89eTrPhE9Xt1ObIvd3JpW2BEBBw+qM84rmXeEkIVTkm4jU73FVsZkKcrcGVCSS4w55C5s/ZA3gqt0X4SppHoiQ+wn8CRT8n6gUPe9tORatuUs+D0KSrdVVFEw57/ACUy/rWuTQ10nrmAVg1ez4e48JQkJnHl/qNT+hXALIU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB7TCCAVagAwIBAgIQEJMgUHOrhq9J+E9dpstyZjANBgkqhkiG9w0BAQsFADA1MTMwMQYDVQQDHioARABFAFMASwBUAE8AUAAtADUARQBRAEsAQwBRAEIAXABEAHkAbABhAG4wHhcNMTkwNzI5MTUzNDEzWhcNMjAwNzI4MjEzNDEzWjA1MTMwMQYDVQQDHioARABFAFMASwBUAE8AUAAtADUARQBRAEsAQwBRAEIAXABEAHkAbABhAG4wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMnC6fPXk6z4RPV7dTmyL3dyaVtgRAQcPqjPOK5l3hJCFU5JuI1O9xVbGZCnK3BlQkkuMOeQubP2QN4KrdF+EqaR6IkPsJ/AkU/J+oFD3vbTkWrblLPg9Ckq3VVRRMOe/wAlMv61rk0NdJ65gFYNXs+HuPCUJCZx5f6jU/oVwCyFAgMBAAEwDQYJKoZIhvcNAQELBQADgYEAfsKtOm8xsBfOowie/GtEZjejji/wYCvuQSeAp50MqVZsOiMNnUPfAhTFbxL+U/C5nczGKUYkqOvhSxbG2UZb2/TVsiYNPMsaM+ljI9cD4+3T1gWtDUlXqQZcZp59MohrTdTxGGoqGEgmwhzYxRWpByCBd4BS7V5TZ9oirydAwAs=</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
