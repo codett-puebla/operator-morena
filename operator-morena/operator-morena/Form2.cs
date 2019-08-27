@@ -591,22 +591,22 @@ namespace operator_morena
             foreach (var item in operators)
             {
                 text = item.name
-                       + "|" + item.last_name
-                       + "|" + item.m_last_name
-                       + "|" + item.alias
-                       + "|" + item.phone
-                       + "|" + item.email
-                       + "|" + item.address
-                       + "|" + item.observation
-                       + "|" + item.municipality
-                       + "|" + item.score
-                       + "|" + item.status
-                       + "|" + item.id_sections
-                       + "|" + item.image
-                       + "|" + item.id_operators_key
-                       + "|" + item.operators_key
-                       + "|" + item.latitude
-                       + "|" + item.length
+                       + "," + item.last_name
+                       + "," + item.m_last_name
+                       + "," + item.alias
+                       + "," + item.phone
+                       + "," + item.email
+                       + "," + item.address
+                       + "," + item.observation
+                       + "," + item.municipality
+                       + "," + item.score
+                       + "," + item.status
+                       + "," + item.id_sections
+                       + "," + item.image
+                       + "," + item.id_operators_key
+                       + "," + item.operators_key
+                       + "," + item.latitude
+                       + "," + item.length
                        + Environment.NewLine;
                 File.AppendAllText(saveFile.FileName, text);
             }
@@ -633,7 +633,7 @@ namespace operator_morena
                     while (!reader.EndOfStream)
                     {
                         var line = reader.ReadLine();
-                        var item = line.Split('|');
+                        var item = line.Split(',');
 
                         var operators = new Operator();
                         operators.name = Convert.ToString(item[0]);

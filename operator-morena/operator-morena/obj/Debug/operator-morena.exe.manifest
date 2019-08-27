@@ -139,14 +139,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="operator-morena.exe" size="290784">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="operator-morena.exe" size="291296">
       <assemblyIdentity name="operator-morena" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>2LJzz2gKhESKUokqdesK12WQTfafpLTzpjWFj3dDE+U=</dsig:DigestValue>
+        <dsig:DigestValue>E4c0IO1lqTXDbcEpIEnrtU6wei2cBgKBvPb3ADH/NXM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -204,7 +204,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>fy+aMsDkbKyH4vl+7El3A/CPugdykfn+neSotng+0VE=</dsig:DigestValue>
+      <dsig:DigestValue>QRekLxlDkXm6YqO3D7e0zwsKVGch5LLB8WnMviAhCmo=</dsig:DigestValue>
     </hash>
   </file>
   <file name="DataBase\dbMorena_log.ldf" size="8388608" writeableType="applicationData">
@@ -213,7 +213,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>0afQ9RShH8bsbmFKVvjxwZGBOTidwXzPUtl4yWnM3ng=</dsig:DigestValue>
+      <dsig:DigestValue>FE6Y45Mz1zw4HQYwi6yVeHnBHfwd+1QbbhLS8VwXPvw=</dsig:DigestValue>
     </hash>
   </file>
   <file name="man.ico" size="15417">

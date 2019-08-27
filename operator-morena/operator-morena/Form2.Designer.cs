@@ -86,10 +86,14 @@
             this.lbNSecciones = new MaterialSkin.Controls.MaterialLabel();
             this.lbNPoblacion = new MaterialSkin.Controls.MaterialLabel();
             this.wbSecciones1 = new System.Windows.Forms.WebBrowser();
+            this.gbOperatosData = new System.Windows.Forms.GroupBox();
+            this.gbSectionData = new System.Windows.Forms.GroupBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOperator)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbImagen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rater1)).BeginInit();
+            this.gbOperatosData.SuspendLayout();
+            this.gbSectionData.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -245,10 +249,10 @@
             this.Column5,
             this.Column7,
             this.Column8});
-            this.dgvOperator.Location = new System.Drawing.Point(9, 113);
+            this.dgvOperator.Location = new System.Drawing.Point(3, 19);
             this.dgvOperator.Name = "dgvOperator";
             this.dgvOperator.ReadOnly = true;
-            this.dgvOperator.Size = new System.Drawing.Size(503, 333);
+            this.dgvOperator.Size = new System.Drawing.Size(503, 354);
             this.dgvOperator.TabIndex = 18;
             this.dgvOperator.DoubleClick += new System.EventHandler(this.dgvOperator_DoubleClick);
             // 
@@ -701,7 +705,7 @@
             this.gMapControl1.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.gMapControl1.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.gMapControl1.ShowTileGridLines = false;
-            this.gMapControl1.Size = new System.Drawing.Size(340, 204);
+            this.gMapControl1.Size = new System.Drawing.Size(567, 204);
             this.gMapControl1.TabIndex = 42;
             this.gMapControl1.Zoom = 0D;
             this.gMapControl1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.gMapControl1_MouseClick);
@@ -715,7 +719,7 @@
             this.materialLabel15.Depth = 0;
             this.materialLabel15.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel15.Location = new System.Drawing.Point(900, 643);
+            this.materialLabel15.Location = new System.Drawing.Point(355, 100);
             this.materialLabel15.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel15.Name = "materialLabel15";
             this.materialLabel15.Size = new System.Drawing.Size(111, 19);
@@ -731,7 +735,7 @@
             this.materialLabel16.Depth = 0;
             this.materialLabel16.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel16.Location = new System.Drawing.Point(903, 678);
+            this.materialLabel16.Location = new System.Drawing.Point(358, 135);
             this.materialLabel16.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel16.Name = "materialLabel16";
             this.materialLabel16.Size = new System.Drawing.Size(124, 19);
@@ -762,7 +766,7 @@
             this.lbNSecciones.Depth = 0;
             this.lbNSecciones.Font = new System.Drawing.Font("Roboto", 11F);
             this.lbNSecciones.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lbNSecciones.Location = new System.Drawing.Point(1033, 643);
+            this.lbNSecciones.Location = new System.Drawing.Point(488, 100);
             this.lbNSecciones.MouseState = MaterialSkin.MouseState.HOVER;
             this.lbNSecciones.Name = "lbNSecciones";
             this.lbNSecciones.Size = new System.Drawing.Size(0, 19);
@@ -777,7 +781,7 @@
             this.lbNPoblacion.Depth = 0;
             this.lbNPoblacion.Font = new System.Drawing.Font("Roboto", 11F);
             this.lbNPoblacion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lbNPoblacion.Location = new System.Drawing.Point(1033, 678);
+            this.lbNPoblacion.Location = new System.Drawing.Point(488, 135);
             this.lbNPoblacion.MouseState = MaterialSkin.MouseState.HOVER;
             this.lbNPoblacion.Name = "lbNPoblacion";
             this.lbNPoblacion.Size = new System.Drawing.Size(0, 19);
@@ -788,23 +792,51 @@
             this.wbSecciones1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.wbSecciones1.Location = new System.Drawing.Point(9, 452);
+            this.wbSecciones1.Location = new System.Drawing.Point(6, 19);
             this.wbSecciones1.MinimumSize = new System.Drawing.Size(20, 20);
             this.wbSecciones1.Name = "wbSecciones1";
-            this.wbSecciones1.Size = new System.Drawing.Size(511, 324);
+            this.wbSecciones1.Size = new System.Drawing.Size(343, 253);
             this.wbSecciones1.TabIndex = 48;
+            // 
+            // gbOperatosData
+            // 
+            this.gbOperatosData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbOperatosData.BackColor = System.Drawing.Color.Transparent;
+            this.gbOperatosData.Controls.Add(this.dgvOperator);
+            this.gbOperatosData.Location = new System.Drawing.Point(9, 113);
+            this.gbOperatosData.Name = "gbOperatosData";
+            this.gbOperatosData.Size = new System.Drawing.Size(515, 379);
+            this.gbOperatosData.TabIndex = 49;
+            this.gbOperatosData.TabStop = false;
+            this.gbOperatosData.Text = "Lista de Operadores";
+            // 
+            // gbSectionData
+            // 
+            this.gbSectionData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbSectionData.BackColor = System.Drawing.Color.Transparent;
+            this.gbSectionData.Controls.Add(this.wbSecciones1);
+            this.gbSectionData.Controls.Add(this.materialLabel15);
+            this.gbSectionData.Controls.Add(this.lbNPoblacion);
+            this.gbSectionData.Controls.Add(this.materialLabel16);
+            this.gbSectionData.Controls.Add(this.lbNSecciones);
+            this.gbSectionData.Location = new System.Drawing.Point(9, 498);
+            this.gbSectionData.Name = "gbSectionData";
+            this.gbSectionData.Size = new System.Drawing.Size(515, 278);
+            this.gbSectionData.TabIndex = 50;
+            this.gbSectionData.TabStop = false;
+            this.gbSectionData.Text = "Información Adicional";
             // 
             // wfDashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1106, 788);
-            this.Controls.Add(this.wbSecciones1);
-            this.Controls.Add(this.lbNPoblacion);
-            this.Controls.Add(this.lbNSecciones);
+            this.Controls.Add(this.gbSectionData);
+            this.Controls.Add(this.gbOperatosData);
             this.Controls.Add(this.btnSearchAddress);
-            this.Controls.Add(this.materialLabel16);
-            this.Controls.Add(this.materialLabel15);
             this.Controls.Add(this.gMapControl1);
             this.Controls.Add(this.rater1);
             this.Controls.Add(this.tbSOperador);
@@ -835,7 +867,6 @@
             this.Controls.Add(this.materialLabel2);
             this.Controls.Add(this.materialLabel1);
             this.Controls.Add(this.pbImagen);
-            this.Controls.Add(this.dgvOperator);
             this.Controls.Add(this.toolStrip1);
             this.Name = "wfDashBoard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -847,6 +878,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvOperator)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbImagen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rater1)).EndInit();
+            this.gbOperatosData.ResumeLayout(false);
+            this.gbSectionData.ResumeLayout(false);
+            this.gbSectionData.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -911,5 +945,7 @@
         private MaterialSkin.Controls.MaterialLabel lbNSecciones;
         private MaterialSkin.Controls.MaterialLabel lbNPoblacion;
         private System.Windows.Forms.WebBrowser wbSecciones1;
+        private System.Windows.Forms.GroupBox gbOperatosData;
+        private System.Windows.Forms.GroupBox gbSectionData;
     }
 }
